@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="template.xhtml" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <ui:define name="header">
+        <ui:include src="header.xhtml">
+            <ui:param name="pageTitle" value="#{texts.accountPageTitle}" />
+        </ui:include>
+    </ui:define>
+    <ui:define name="content">
+        <h:form id="registerForm">
+            <h:panelGrid columns="2">
+                <h:outputLabel value="#{texts.name}" />
+                <h:outputText value="#{loginBean.customer.firstName} #{loginBean.customer.lastName}" />
+                <h:outputLabel value="#{texts.email}" />
+                <h:outputText value="#{loginBean.customer.email}" />
+
+		<h:outputLabel value="#{texts.address}" />
+                <h:outputText value="#{loginBean.customer.address.street}" />
+		<h:outputText value="" />
+                <h:outputText value="#{loginBean.customer.address.postalCode}" />
+		<h:outputText value="" />
+                <h:outputText value="#{loginBean.customer.address.city}" />
+		<h:outputText value="" />
+                <h:outputText value="#{loginBean.customer.address.country}" />
+
+		<h:outputLabel value="#{texts.creditCard}" />
+                <h:outputText value="#{loginBean.customer.creditCard.type}" />
+		<h:outputText value="" />
+		<h:outputText id="creditCardNumber" value="#{loginBean.customer.creditCard.number}">
+		    <f:converter converterId="org.books.converter.CreditCardNumberConverter" />
+		</h:outputText>
+		<h:outputText value="" />
+		<h:panelGroup>
+		    <h:outputText value="#{loginBean.customer.creditCard.expirationMonth}">
+			<f:convertNumber pattern="00" />
+		    </h:outputText>
+		    /
+		    <h:outputText value="#{loginBean.customer.creditCard.expirationYear}">
+			<f:converter converterId="org.books.converter.CreditCardYearConverter" />
+		    </h:outputText>
+		</h:panelGroup>
+            </h:panelGrid>
+	    <p/>
+	    <h:commandButton value="#{texts.btnChange}" action="#{navigationBean.goToCustomerDetails()}" />
+	    <h:outputText value=" " />
+	    <h:commandButton value="#{texts.btnChangePassword}" action="#{navigationBean.goToChangePassword()}" />
+        </h:form>
+	<p/>
+	<h:form id="bestellungForm">
+	    <h:outputText value="#{texts.accountOrder}" styleClass="subheading"/>
+	    <h:panelGrid columns="4">
+		<h:outputLabel for="searchYear" value="#{texts.accountYear}"/>
+		<h:inputText id="searchYear" value="#{accountBean.searchYear}" size="4" validatorMessage="#{texts.accountInvalidYeahr}" required="true">
+		    <f:validateLongRange minimum="1000" maximum="9999" />
+		</h:inputText>
+		<h:commandButton value="#{texts.btnSearch}" action="#{accountBean.searchOrders()}" />
+		<h:message for="searchYear" errorClass="error" showSummary="true" showDetail="false" />
+	    </h:panelGrid>
+	    <p/>
+	    <h:messages showSummary="true" showDetail="false" errorClass="error" infoClass="info" layout="table" globalOnly="true" />
+	    <h:dataTable value="#{accountBean.searchResult}" var="order" rendered="#{not empty accountBean.searchResult}">
+		<h:column>
+		    <f:facet name="header">
+			<h:outputText value="#{texts.orderConfirmationNr}" />
+		    </f:facet>
+		    <h:commandLink action="#{accountBean.selectOrder(order)}" value="#{order.number}"/>
+		</h:column>
+		<h:column>
+		    <f:facet name="header">
+			<h:outputText value="#{texts.orderConfirmationDate}" />
+		    </f:facet>
+		    <h:outputText value="#{orderBean.order.date}">
+			<f:convertDateTime timeStyle="Date" />
+		    </h:outputText>
+		</h:column>		
+		<h:column>
+		    <f:facet name="header">
+			<h:outputText value="#{texts.orderConfirmationAmount}" />
+		    </f:facet>
+		    <h:outputText value="#{order.amount}"/>
+		</h:column>
+		<h:column>
+		    <f:facet name="header">
+			<h:outputText value="#{texts.orderConfirmationStatus}" />
+		    </f:facet>
+		    <h:outputText value="#{order.status.asString()}"/>
+		</h:column>
+		<h:column>
+		    <h:commandButton value="#{texts.cancel}" action="#{accountBean.cancelOrder(order)}" rendered="#{order.status == 'accepted' || order.status == 'processing'}" />
+		</h:column>
+	    </h:dataTable>	
+	    <p/>
+	    <h:commandLink value="#{texts.back}" action="#{navigationBean.goBack()}" immediate="true" />
+	</h:form>
+    </ui:define>
+</ui:composition>

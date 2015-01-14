@@ -1,0 +1,9 @@
+-------------------------------------------------------------------------------
+Test set: org.books.application.service.OrderServiceIT
+-------------------------------------------------------------------------------
+Tests run: 3, Failures: 1, Errors: 0, Skipped: 2, Time elapsed: 15.756 sec <<< FAILURE!
+setUpClass(org.books.application.service.OrderServiceIT)  Time elapsed: 0 sec  <<< FAILURE!
+java.lang.IllegalArgumentException: Object: Customer{firstName=Homer, lastName=Simpson, email=silvan.strueby@students.bfh.ch, address=Address{id=null, street=Street, city=St. Ursen, postalCode=postalCode, country=country}, creditCard=CreditCard{id=null, type=MasterCard, number=12345, expirationMonth=6, expirationYear=16}} is not a known entity type.
+	at org.eclipse.persistence.internal.sessions.UnitOfWorkImpl.registerNewObjectForPersist(UnitOfWorkImpl.java:4228)
+	at org.eclipse.persistence.internal.jpa.EntityManagerImpl.persist(EntityManagerImpl.java:496)
+	at org.books.application.service.OrderServiceIT.setUpClass(OrderServiceIT.java:121)

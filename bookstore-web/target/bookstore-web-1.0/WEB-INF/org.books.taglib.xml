@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<facelet-taglib version="2.1" xmlns="http://java.sun.com/xml/ns/javaee" 
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+		xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/javaee/web-jsptaglibrary_2_1.xsd">
+    <namespace>http://www.bfh.ch/bookstore/taglib</namespace>
+    <tag>
+	<tag-name>validateCreditCardNumber</tag-name>
+	<validator>
+	    <validator-id>
+		org.books.validator.CreditCardNumberValidator
+	    </validator-id>
+	</validator>
+    </tag>
+    <tag>
+	<tag-name>validateCreditCardExpirationDate</tag-name>
+	<validator>
+	    <validator-id>
+		org.books.validator.CreditCardExpirationDateValidator
+	    </validator-id>
+	</validator>
+    </tag>
+    <tag>
+	<tag-name>validatePassword</tag-name>
+	<validator>
+	    <validator-id>
+		org.books.validator.PasswordValidator
+	    </validator-id>
+	</validator>
+    </tag>
+</facelet-taglib>

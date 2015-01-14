@@ -1,0 +1,12 @@
+<dataset>
+	<BOOK ID="1" ISBN="0596009208" TITLE="Head First Java (2nd Edition)" AUTHORS="Kathy Sierra, Bert Bates" PUBLISHER="O'Reilly" PUB_YEAR="2005" BINDING="Paperback" NUM_PAGES="720" PRICE="44.95"/>
+	<BOOK ID="2" ISBN="0596007736" TITLE="Java In A Nutshell (5th Edition)" AUTHORS="David Flanagan" PUBLISHER="O'Reilly" PUB_YEAR="2005" BINDING="Paperback" NUM_PAGES="1254" PRICE="44.95"/>
+	<BOOK ID="3" ISBN="0471777102" TITLE="Professional Java JDK 6 Edition" AUTHORS="W. Clay Richardson, Donald Avondolio, Scot Schrager, Mark W. Mitchell, Jeff Scanlon" PUBLISHER="Wrox" PUB_YEAR="2007" BINDING="Paperback" NUM_PAGES="741" PRICE="39.99"/>
+	<BOOK ID="4" ISBN="0131872486" TITLE="Thinking in Java (4th Edition)" AUTHORS="Bruce Eckel" PUBLISHER="Prentice Hall PTR" PUB_YEAR="2006" BINDING="Paperback" NUM_PAGES="1150" PRICE="64.99"/>
+	<BOOK ID="5" ISBN="0596006209" TITLE="Java Examples in a Nutshell (3rd Edition)" AUTHORS="David Flanagan" PUBLISHER="O'Reilly" PUB_YEAR="2004" BINDING="Paperback" NUM_PAGES="720" PRICE="39.95"/>
+	<BOOK ID="6" ISBN="0321246780" TITLE="The Java Language Specification (3rd Edition)" AUTHORS="James Gosling, Bill Joy, Guy Steele, Gilad Bracha" PUBLISHER="Prentice Hall PTR" PUB_YEAR="2005" BINDING="Paperback" NUM_PAGES="688" PRICE="49.99"/>
+	<BOOK ID="7" ISBN="0321334205" TITLE="The Java Tutorial: A Short Course on the Basics (4th Edition)" AUTHORS="Sharon Zakhour, Scott Hommel, Jacob Royal, Isaac Rabinovitch, Tom Risser, Mark Hoeber" PUBLISHER="Prentice Hall PTR" PUB_YEAR="2006" BINDING="Paperback" NUM_PAGES="672" PRICE="49.99"/>
+	<BOOK ID="8" ISBN="0596007019" TITLE="Java Cookbook (2nd Edition)" AUTHORS="Ian F. Darwin" PUBLISHER="O'Reilly" PUB_YEAR="2004" BINDING="Paperback" NUM_PAGES="862" PRICE="49.95"/>
+	<BOOK ID="9" ISBN="0596008732" TITLE="Learning Java (3rd Edition)" AUTHORS="Patrick Niemeyer, Jonathan Knudsen" PUBLISHER="O'Reilly" PUB_YEAR="2005" BINDING="Paperback" NUM_PAGES="976" PRICE="44.95"/>
+	<BOOK ID="10" ISBN="0321349806" TITLE="The Java Programming Language (4th Edition)" AUTHORS="Ken Arnold, James Gosling, David Holmes" PUBLISHER="Prentice Hall PTR" PUB_YEAR="2005" BINDING="Paperback" NUM_PAGES="928" PRICE="54.99"/>
+</dataset>

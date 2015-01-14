@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuite tests="3" failures="1" name="org.books.application.service.OrderServiceIT" time="15.756" errors="0" skipped="2">
+  <properties>
+    <property name="java.runtime.name" value="Java(TM) SE Runtime Environment"/>
+    <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk1.8.0_20\jre\bin"/>
+    <property name="java.vm.version" value="25.20-b23"/>
+    <property name="java.vm.vendor" value="Oracle Corporation"/>
+    <property name="java.vendor.url" value="http://java.oracle.com/"/>
+    <property name="path.separator" value=";"/>
+    <property name="guice.disable.misplaced.annotation.check" value="true"/>
+    <property name="java.vm.name" value="Java HotSpot(TM) 64-Bit Server VM"/>
+    <property name="file.encoding.pkg" value="sun.io"/>
+    <property name="user.script" value=""/>
+    <property name="user.country" value="CH"/>
+    <property name="sun.java.launcher" value="SUN_STANDARD"/>
+    <property name="sun.os.patch.level" value="Service Pack 1"/>
+    <property name="test" value="org.books.application.service.OrderServiceIT"/>
+    <property name="java.vm.specification.name" value="Java Virtual Machine Specification"/>
+    <property name="user.dir" value="C:\work\bookstore\bookstore-ejb"/>
+    <property name="java.runtime.version" value="1.8.0_20-b26"/>
+    <property name="java.awt.graphicsenv" value="sun.awt.Win32GraphicsEnvironment"/>
+    <property name="java.endorsed.dirs" value="C:\Program Files\Java\jdk1.8.0_20\jre\lib\endorsed"/>
+    <property name="os.arch" value="amd64"/>
+    <property name="java.io.tmpdir" value="C:\Users\awy\AppData\Local\Temp\"/>
+    <property name="line.separator" value="
+"/>
+    <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.variant" value=""/>
+    <property name="os.name" value="Windows 7"/>
+    <property name="maven.ext.class.path" value="C:\Program Files\NetBeans 8.0.1\java\maven-nblib\netbeans-eventspy.jar;C:\Program Files\NetBeans 8.0.1\java\maven-nblib\netbeans-cos.jar"/>
+    <property name="classworlds.conf" value="C:\Program Files\NetBeans 8.0.1\java\maven\bin\m2.conf"/>
+    <property name="sun.jnu.encoding" value="Cp1252"/>
+    <property name="java.library.path" value="C:\Program Files\Java\jdk1.8.0_20\bin;C:\Windows\Sun\Java\bin;C:\Windows\system32;C:\Windows;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Pervasive Software\PSQL\bin\;C:\app\product\11.2.0\client_1\bin;C:\Program Files (x86)\Intel\iCLS Client\;C:\Program Files\Intel\iCLS Client\;C:\PROGRAM FILES\COMMON FILES\MICROSOFT SHARED\WINDOWS LIVE;C:\PROGRAM FILES (X86)\COMMON FILES\MICROSOFT SHARED\WINDOWS LIVE;C:\Windows\SYSTEM32;C:\Windows;C:\Windows\SYSTEM32\WBEM;C:\Windows\SYSTEM32\WINDOWSPOWERSHELL\V1.0\;C:\PROGRAM FILES (X86)\INTEL\OPENCL SDK\2.0\BIN\X86;C:\PROGRAM FILES (X86)\INTEL\OPENCL SDK\2.0\BIN\X64;C:\PROGRAM FILES\COMMON FILES\LENOVO;C:\PROGRAM FILES (X86)\WINDOWS LIVE\SHARED;C:\SWTOOLS\READYAPPS;C:\PROGRAM FILES (X86)\COMMON FILES\LENOVO;C:\PROGRAM FILES\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\DAL;C:\PROGRAM FILES\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\IPT;C:\PROGRAM FILES (X86)\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\DAL;C:\PROGRAM FILES (X86)\INTEL\INTEL(R) MANAGEMENT ENGINE COMPONENTS\IPT;C:\PROGRAM FILES (X86)\INTEL\OPENCL SDK\2.0\BIN\X86;C:\PROGRAM FILES (X86)\INTEL\OPENCL SDK\2.0\BIN\X64;C:\Program Files\ThinkPad\Bluetooth Software\;C:\Program Files\ThinkPad\Bluetooth Software\syswow64;C:\Program Files (x86)\Common Files\Apple\Mobile Device Support\;C:\Program Files (x86)\Common Files\Apple\Apple Application Support;C:\Program Files (x86)\Common Files\Sage SData\;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\IPT;C:\Program Files (x86)\Intel\OpenCL SDK\3.0\bin\x86;C:\Program Files (x86)\Intel\OpenCL SDK\3.0\bin\x64;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\Java\jdk1.8.0_20\bin;C:\app\apache-maven-3.2.3\bin;."/>
+    <property name="java.specification.name" value="Java Platform API Specification"/>
+    <property name="java.class.version" value="52.0"/>
+    <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
+    <property name="os.version" value="6.1"/>
+    <property name="user.home" value="C:\Users\awy"/>
+    <property name="user.timezone" value="Europe/Berlin"/>
+    <property name="java.awt.printerjob" value="sun.awt.windows.WPrinterJob"/>
+    <property name="java.specification.version" value="1.8"/>
+    <property name="file.encoding" value="UTF-8"/>
+    <property name="user.name" value="AWy"/>
+    <property name="java.class.path" value="C:\Program Files\NetBeans 8.0.1\java\maven\boot\plexus-classworlds-2.4.jar"/>
+    <property name="java.vm.specification.version" value="1.8"/>
+    <property name="sun.arch.data.model" value="64"/>
+    <property name="java.home" value="C:\Program Files\Java\jdk1.8.0_20\jre"/>
+    <property name="sun.java.command" value="org.codehaus.plexus.classworlds.launcher.Launcher -Dtest=org.books.application.service.OrderServiceIT -Dmaven.ext.class.path=C:\Program Files\NetBeans 8.0.1\java\maven-nblib\netbeans-eventspy.jar;C:\Program Files\NetBeans 8.0.1\java\maven-nblib\netbeans-cos.jar -Dfile.encoding=UTF-8 surefire:test"/>
+    <property name="java.specification.vendor" value="Oracle Corporation"/>
+    <property name="user.language" value="de"/>
+    <property name="awt.toolkit" value="sun.awt.windows.WToolkit"/>
+    <property name="java.vm.info" value="mixed mode"/>
+    <property name="java.version" value="1.8.0_20"/>
+    <property name="java.ext.dirs" value="C:\Program Files\Java\jdk1.8.0_20\jre\lib\ext;C:\Windows\Sun\Java\lib\ext"/>
+    <property name="sun.boot.class.path" value="C:\Program Files\Java\jdk1.8.0_20\jre\lib\resources.jar;C:\Program Files\Java\jdk1.8.0_20\jre\lib\rt.jar;C:\Program Files\Java\jdk1.8.0_20\jre\lib\sunrsasign.jar;C:\Program Files\Java\jdk1.8.0_20\jre\lib\jsse.jar;C:\Program Files\Java\jdk1.8.0_20\jre\lib\jce.jar;C:\Program Files\Java\jdk1.8.0_20\jre\lib\charsets.jar;C:\Program Files\Java\jdk1.8.0_20\jre\lib\jfr.jar;C:\Program Files\Java\jdk1.8.0_20\jre\classes"/>
+    <property name="java.vendor" value="Oracle Corporation"/>
+    <property name="maven.home" value="C:\Program Files\NetBeans 8.0.1\java\maven"/>
+    <property name="file.separator" value="\"/>
+    <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/"/>
+    <property name="sun.cpu.endian" value="little"/>
+    <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
+    <property name="sun.desktop" value="windows"/>
+    <property name="sun.cpu.isalist" value="amd64"/>
+  </properties>
+  <testcase classname="org.books.application.service.OrderServiceIT" name="setUpClass" time="0">
+    <failure message="Object: Customer{firstName=Homer, lastName=Simpson, email=silvan.strueby@students.bfh.ch, address=Address{id=null, street=Street, city=St. Ursen, postalCode=postalCode, country=country}, creditCard=CreditCard{id=null, type=MasterCard, number=12345, expirationMonth=6, expirationYear=16}} is not a known entity type." type="java.lang.IllegalArgumentException">java.lang.IllegalArgumentException: Object: Customer{firstName=Homer, lastName=Simpson, email=silvan.strueby@students.bfh.ch, address=Address{id=null, street=Street, city=St. Ursen, postalCode=postalCode, country=country}, creditCard=CreditCard{id=null, type=MasterCard, number=12345, expirationMonth=6, expirationYear=16}} is not a known entity type.
+	at org.eclipse.persistence.internal.sessions.UnitOfWorkImpl.registerNewObjectForPersist(UnitOfWorkImpl.java:4228)
+	at org.eclipse.persistence.internal.jpa.EntityManagerImpl.persist(EntityManagerImpl.java:496)
+	at org.books.application.service.OrderServiceIT.setUpClass(OrderServiceIT.java:121)
+</failure>
+    <system-out>[EL Info]: EclipseLink, version: Eclipse Persistence Services - 2.5.2.v20140319-9ad6abd
+[EL Fine]: connection: Detected database platform: org.eclipse.persistence.platform.database.JavaDBPlatform
+[EL Config]: connection: connecting(DatabaseLogin(
+	platform=&gt;JavaDBPlatform
+	user name=&gt; &quot;&quot;
+	connector=&gt;JNDIConnector datasource name=&gt;jdbc/bookstore
+))
+[EL Config]: connection: Connected: jdbc:derby://localhost:1527/bookstore;create=true
+	User: bookstore
+	Database: Apache Derby  Version: 10.10.1.3 - (1557168)
+	Driver: Apache Derby Network Client JDBC Driver  Version: 10.10.2.0 - (1582446)
+[EL Config]: connection: connecting(DatabaseLogin(
+	platform=&gt;JavaDBPlatform
+	user name=&gt; &quot;&quot;
+	connector=&gt;JNDIConnector datasource name=&gt;jdbc/bookstore
+))
+[EL Config]: connection: Connected: jdbc:derby://localhost:1527/bookstore;create=true
+	User: bookstore
+	Database: Apache Derby  Version: 10.10.1.3 - (1557168)
+	Driver: Apache Derby Network Client JDBC Driver  Version: 10.10.2.0 - (1582446)
+[EL Info]: connection: file:/C:/work/bookstore/bookstore-jpa/target/classes/_bookstore login successful
+[EL Warning]: metamodel: The collection of metamodel types is empty. Model classes may not have been found during entity search for Java SE and some Java EE container managed persistence units.  Please verify that your entity classes are referenced in persistence.xml using either &lt;class&gt; elements or a global &lt;exclude-unlisted-classes&gt;false&lt;/exclude-unlisted-classes&gt; element
+</system-out>
+    <system-err>Jan 14, 2015 7:41:46 PM org.hibernate.validator.internal.util.Version &lt;clinit&gt;
+INFO: HV000001: Hibernate Validator 5.0.0.Final
+</system-err>
+  </testcase>
+  <testcase classname="org.books.application.service.OrderServiceIT" name="placeOrder" time="0">
+    <skipped/>
+  </testcase>
+  <testcase classname="org.books.application.service.OrderServiceIT" name="tearDownClass" time="0">
+    <skipped/>
+  </testcase>
+</testsuite>

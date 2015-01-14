@@ -1,0 +1,17 @@
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\entity\Order.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\service\OrderRepository.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\entity\Address.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\enums\Binding.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\entity\Customer.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\entity\LineItem.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\entity\Login.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\enums\Status.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\entity\CreditCard.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\entity\Book.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\service\CustomerRepository.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\dto\OrderItem.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\enums\Type.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\dto\OrderInfo.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\service\BookRepository.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\dto\CustomerInfo.java
+C:\work\bookstore\bookstore-jpa\src\main\java\org\books\persistence\QueryUtil.java

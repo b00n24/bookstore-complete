@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui:composition template="template.xhtml" 
+                xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"
+		xmlns:bTag="http://www.bfh.ch/bookstore/taglib"
+		xmlns:comp="http://xmlns.jcp.org/jsf/composite/components">
+    <ui:define name="header">
+        <ui:include src="header.xhtml">
+            <ui:param name="pageTitle" value="#{texts.registerPageTitle}" />
+        </ui:include>
+    </ui:define>
+    <ui:define name="content">
+	<p/>
+        <h:form id="registerForm">
+	    <comp:requiredField label="#{texts.firstname}" fieldId="firstName" value="#{customerBean.customer.firstName}" styleName="addressLabelFixedWidth" />
+	    <comp:requiredField label="#{texts.lastname}" fieldId="lastName" value="#{customerBean.customer.lastName}" styleName="addressLabelFixedWidth" />
+	    <comp:requiredField label="#{texts.email}" fieldId="email" value="#{customerBean.customer.email}" styleName="addressLabelFixedWidth" />
+	    <comp:password label="#{texts.password}" fieldId="password" value="#{customerBean.customer.password}" styleName="addressLabelFixedWidth" />
+
+	    <p/>
+	    <h:outputText value="#{texts.address}" styleClass="subheading"/>
+	    <comp:requiredField label="#{texts.street}" fieldId="street" value="#{customerBean.customer.address.street}" styleName="addressLabelFixedWidth" />
+	    <comp:requiredField label="#{texts.city}" fieldId="city" value="#{customerBean.customer.address.city}" styleName="addressLabelFixedWidth" />
+	    <comp:requiredField size="5" label="#{texts.postalCode}" fieldId="street" value="#{customerBean.customer.address.postalCode}" styleName="addressLabelFixedWidth" />
+            <h:panelGrid columns="2">
+		<h:outputLabel value="#{texts.country}" styleClass="addressLabelFixedWidth" />
+		<h:panelGroup>
+		    <h:selectOneMenu id="country" value="#{customerBean.country}" required="true">
+			<f:selectItems value="#{applicationBean.countries}" var="country" 
+				       itemLabel="#{country.name}" itemValue="#{country.code}" />
+		    </h:selectOneMenu>
+		    <h:message for="country" errorClass="error" showSummary="true" showDetail="false" />
+		</h:panelGroup>
+	    </h:panelGrid>
+
+	    <p/>
+	    <h:outputText value="#{texts.creditCard}" styleClass="subheading"/>
+	    <h:panelGrid columns="2">
+                <h:outputLabel value="#{texts.cardType}" styleClass="addressLabelFixedWidth" />
+		<h:panelGroup>
+		    <h:selectOneMenu id="cardType" value="#{customerBean.customer.creditCard.type}" required="true">
+			<f:selectItems value="#{applicationBean.creditCardTypes}" var="type" 
+				       itemLabel="#{type.name()}" itemValue="#{type.name()}" />
+		    </h:selectOneMenu>
+		    <h:message for="cardType" errorClass="error" showSummary="true" showDetail="false" />
+		</h:panelGroup>
+                <h:outputLabel value="#{texts.cardNumber}" styleClass="addressLabelFixedWidth" />
+		<h:panelGroup>
+		    <h:inputText id="creditCardNumber" value="#{customerBean.customer.creditCard.number}" size="20">
+			<bTag:validateCreditCardNumber cardTypeId="cardType" />
+			<f:converter converterId="org.books.converter.CreditCardNumberConverter" />
+		    </h:inputText>
+		    <h:message for="creditCardNumber" errorClass="error" showSummary="true" showDetail="false" />
+		</h:panelGroup>
+                <h:outputLabel value="#{texts.cardValidTo}" styleClass="addressLabelFixedWidth" />
+		<h:panelGroup>
+		    <h:inputText id="expirationMonth" value="#{customerBean.customer.creditCard.expirationMonth}" size="1" maxlength="2" required="true" >
+			<f:convertNumber pattern="00" />
+			<f:validateLongRange minimum="1" maximum="12" />
+		    </h:inputText>
+		    /
+		    <h:inputText id="expirationYear" value="#{customerBean.customer.creditCard.expirationYear}" size="1" maxlength="2" required="true" >
+			<f:converter converterId="org.books.converter.CreditCardYearConverter" />
+			<bTag:validateCreditCardExpirationDate cardExpirationMonthId="expirationMonth" />
+		    </h:inputText>
+		    <h:message for="expirationMonth" errorClass="error" showSummary="true" showDetail="false" />
+		    <h:message for="expirationYear" errorClass="error" showSummary="true" showDetail="false" />
+		</h:panelGroup>
+            </h:panelGrid>
+	    <p/>
+	    <h:messages showSummary="true" showDetail="false" errorClass="error" infoClass="info" layout="table" globalOnly="true" />
+	    <p/>
+	    <h:commandButton value="#{texts.register}" action="#{customerBean.register()}" />
+	    <h:outputText value=" " />
+	    <h:commandButton value="#{texts.cancel}" action="#{navigationBean.goBack()}" immediate="true" />
+	    <p/>
+            <h:commandLink value="#{texts.back}" action="#{navigationBean.goBack()}" immediate="true" />
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:composite="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:cc="http://xmlns.jcp.org/jsp/jstl/core">
+    <composite:interface>
+	<composite:attribute name="label" required="true" />
+	<composite:attribute name="fieldId" required="true" />
+	<composite:attribute name="value" required="true" />
+	<composite:attribute name="size" default="30" />
+	<composite:attribute name="secret" />
+	<composite:attribute name="styleName" />
+    </composite:interface>
+    <composite:implementation>
+	<h:panelGrid columns="2">
+	    <h:outputLabel value="#{cc.attrs.label}" styleClass="#{cc.attrs.styleName}" />
+	    <h:panelGroup>
+		<cc:choose>
+		    <cc:when test="#{cc.attrs.secret}">
+			<h:inputSecret id="#{cc.attrs.fieldId}" value="#{cc.attrs.value}" size="#{cc.attrs.size}" required="true" />
+		    </cc:when>
+		    <cc:otherwise>
+			<h:inputText id="#{cc.attrs.fieldId}" value="#{cc.attrs.value}" size="#{cc.attrs.size}" required="true" />
+		    </cc:otherwise>
+		</cc:choose>
+		<h:message for="#{cc.attrs.fieldId}" errorClass="error" showSummary="true" showDetail="false" />
+	    </h:panelGroup>
+	</h:panelGrid>
+    </composite:implementation>
+</html>

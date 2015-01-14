@@ -1,0 +1,4 @@
+org\books\persistence\BookRepositoryTestIT.class
+org\books\persistence\OrderRepositoryTestIT.class
+org\books\persistence\CustomerRepositoryTestIT.class
+org\books\persistence\QueriesWithDataTest.class
