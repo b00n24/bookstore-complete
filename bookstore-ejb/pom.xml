@@ -26,7 +26,6 @@
 	    <groupId>org.books</groupId>
 	    <artifactId>bookstore-jpa</artifactId>
 	    <version>${project.version}</version>
-	    <scope>provided</scope>
 	</dependency>
     </dependencies>
 
