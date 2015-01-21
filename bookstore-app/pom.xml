@@ -47,6 +47,7 @@
 		    <fileNameMapping>no-version</fileNameMapping>
 		    <applicationName>bookstore-app</applicationName>
 		    <defaultLibBundleDir>APP-INF/lib</defaultLibBundleDir>
+		    <libraryDirectoryMode>NONE</libraryDirectoryMode>
 		    <modules>
 			<ejbModule>
 			    <groupId>org.books</groupId>
