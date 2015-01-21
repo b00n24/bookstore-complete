@@ -39,6 +39,9 @@ public class BookRepository {
 	    result = query.getSingleResult();
 	} catch (NoResultException ex) {
 	    // Ignore no Result Exception
+	} catch (Exception ex) {
+	    // TODO Log error
+	    System.err.println(ex.getMessage());
 	}
 	return result;
     }

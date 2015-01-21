@@ -24,7 +24,7 @@ public class OrderInfo implements Serializable {
 	this.amount = amount;
 	this.status = status;
     }
-    
+
     public Long getId() {
 	return id;
     }

@@ -41,7 +41,6 @@ public class OrderProcessorBean implements MessageListener {
     @Resource(name = "simulatedProcessingTimeInMillis")
     private Long simulatedProcessingTimeInMillis;
 
-//    private static final Long SIMULATED_PROCESSING_TIME_IN_MILLIS = 60 * 1000L;
     private static final String PARAM_ORDER_ID = "orderId";
     private static final Logger LOGGER = Logger.getLogger(OrderProcessorBean.class.getName());
 

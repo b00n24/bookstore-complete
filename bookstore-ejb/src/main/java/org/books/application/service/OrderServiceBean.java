@@ -16,7 +16,6 @@ import javax.jms.JMSContext;
 import javax.jms.JMSException;
 import javax.jms.MapMessage;
 import javax.jms.Queue;
-import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
@@ -68,7 +67,7 @@ public class OrderServiceBean implements OrderService {
     @Override
     public void cancelOrder(Long orderId) throws OrderNotFoundException, InvalidOrderStatusException {
 	final Order order = findOrder(orderId);
-	if (order.getStatus() == Status.shipped) {
+	if (order.getStatus() != Status.accepted && order.getStatus() != Status.processing) {
 	    throw new InvalidOrderStatusException();
 	}
 	order.setStatus(Status.canceled);
@@ -101,9 +100,12 @@ public class OrderServiceBean implements OrderService {
 
 	Order order = new Order();
 	Address a = customer.getAddress();
-	order.setAddress(new Address(a.getStreet(), a.getCity(), a.getPostalCode(), a.getCountry()));
+	Address addressCopy = new Address(a.getStreet(), a.getCity(), a.getPostalCode(), a.getCountry());
+	order.setAddress(addressCopy);
+
 	CreditCard cc = customer.getCreditCard();
-	order.setCreditCard(new CreditCard(cc.getType(), cc.getNumber(), cc.getExpirationMonth(), cc.getExpirationYear()));
+	CreditCard ccCopy = new CreditCard(cc.getType(), cc.getNumber(), cc.getExpirationMonth(), cc.getExpirationYear());
+	order.setCreditCard(ccCopy);
 	order.setCustomer(customer);
 	order.setDate(new Date());
 	order.setNumber(UUID.randomUUID().toString());

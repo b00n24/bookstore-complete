@@ -67,8 +67,8 @@ public class OrderRepository {
     public void update(Order order) {
 	em.merge(order);
     }
-    
+
     public void persist(Order order) {
 	em.persist(order);
-    }  
+    }    
 }

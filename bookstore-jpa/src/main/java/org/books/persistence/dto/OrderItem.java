@@ -6,7 +6,8 @@ import java.io.Serializable;
  *
  * @author AWy
  */
-public class OrderItem implements Serializable{
+public class OrderItem implements Serializable {
+
     private String isbn;
     private Integer quantity;
 
@@ -25,6 +26,5 @@ public class OrderItem implements Serializable{
     public void setQuantity(Integer quantity) {
 	this.quantity = quantity;
     }
-    
-    
+
 }

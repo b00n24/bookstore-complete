@@ -60,17 +60,10 @@ public class CustomerServiceBean implements CustomerService {
 	return checkCustomerFound(customer);
     }
 
-    private Customer checkCustomerFound(Customer customer) throws CustomerNotFoundException {
-	if (customer == null) {
-	    throw new CustomerNotFoundException();
-	}
-	return customer;
-    }
-
     @Override
     public Long registerCustomer(Customer customer, String password) throws EmailAlreadyUsedException {
 	Customer alreadyRegisteredCustomer = customerRepository.findByMail(customer.getEmail());
-	if(alreadyRegisteredCustomer != null){
+	if (alreadyRegisteredCustomer != null) {
 	    throw new EmailAlreadyUsedException();
 	}
 	Login login = new Login();
@@ -92,10 +85,17 @@ public class CustomerServiceBean implements CustomerService {
     public void updateCustomer(Customer customer) throws CustomerNotFoundException, EmailAlreadyUsedException {
 	Customer foundCustomer = customerRepository.findByMail(customer.getEmail());
 	checkCustomerFound(foundCustomer);
-	if(!foundCustomer.getId().equals(customer.getId())){
+	if (!foundCustomer.getId().equals(customer.getId())) {
 	    throw new EmailAlreadyUsedException();
 	}
 	customerRepository.update(customer);
+    }
+
+    private Customer checkCustomerFound(Customer customer) throws CustomerNotFoundException {
+	if (customer == null) {
+	    throw new CustomerNotFoundException();
+	}
+	return customer;
     }
 
 }

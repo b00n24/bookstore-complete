@@ -1,10 +1,12 @@
 package org.books.persistence.dto;
 
+import java.io.Serializable;
+
 /**
  *
  * @author AWy
  */
-public class CustomerInfo {
+public class CustomerInfo implements Serializable {
 
     private Long id;
     private String firstName;
@@ -17,7 +19,7 @@ public class CustomerInfo {
 	this.lastName = lastName;
 	this.email = email;
     }
-    
+
     public Long getId() {
 	return id;
     }
