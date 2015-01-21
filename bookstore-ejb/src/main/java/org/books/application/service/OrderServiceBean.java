@@ -42,7 +42,7 @@ import org.books.persistence.service.OrderRepository;
  * @author AWy
  */
 @Stateless(name = "OrderService")
-public class OrderServiceBean implements OrderService {
+public class OrderServiceBean implements OrderServiceLocal, OrderServiceRemote {
 
     @PersistenceContext(unitName = "bookstore", type = PersistenceContextType.TRANSACTION)
     private EntityManager em;

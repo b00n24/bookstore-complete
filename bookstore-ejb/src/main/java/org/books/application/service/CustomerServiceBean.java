@@ -15,7 +15,7 @@ import org.books.persistence.entity.Login;
 import org.books.persistence.service.CustomerRepository;
 
 @Stateless(name = "CustomerService")
-public class CustomerServiceBean implements CustomerService {
+public class CustomerServiceBean implements CustomerServiceLocal, CustomerServiceRemote {
 
     @PersistenceContext(unitName = "bookstore", type = PersistenceContextType.TRANSACTION)
     private EntityManager em;

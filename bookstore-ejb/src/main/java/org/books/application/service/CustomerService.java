@@ -1,7 +1,6 @@
 package org.books.application.service;
 
 import java.util.List;
-import javax.ejb.Remote;
 import org.books.application.exception.CustomerNotFoundException;
 import org.books.application.exception.EmailAlreadyUsedException;
 import org.books.application.exception.InvalidCredentialsException;
@@ -12,7 +11,6 @@ import org.books.persistence.entity.Customer;
  *
  * @author Silvan
  */
-@Remote
 public interface CustomerService {
 
     /**

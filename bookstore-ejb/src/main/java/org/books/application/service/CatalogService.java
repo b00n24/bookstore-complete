@@ -1,7 +1,6 @@
 package org.books.application.service;
 
 import java.util.List;
-import javax.ejb.Remote;
 import org.books.application.exception.BookNotFoundException;
 import org.books.persistence.entity.Book;
 
@@ -9,7 +8,6 @@ import org.books.persistence.entity.Book;
  *
  * @author AWy
  */
-@Remote
 public interface CatalogService {
 
     /**

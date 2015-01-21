@@ -11,7 +11,7 @@ import org.books.persistence.entity.Book;
 import org.books.persistence.service.BookRepository;
 
 @Stateless(name = "CatalogService")
-public class CatalogServiceBean implements CatalogService {
+public class CatalogServiceBean implements CatalogServiceLocal, CatalogServiceRemote {
 
     @PersistenceContext(unitName = "bookstore", type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
