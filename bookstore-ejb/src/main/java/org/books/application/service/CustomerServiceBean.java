@@ -17,7 +17,7 @@ import org.books.persistence.service.CustomerRepository;
 @Stateless(name = "CustomerService")
 public class CustomerServiceBean implements CustomerService {
 
-    @PersistenceContext(unitName = "jdbc/bookstore", type = PersistenceContextType.TRANSACTION)
+    @PersistenceContext(unitName = "bookstore", type = PersistenceContextType.TRANSACTION)
     private EntityManager em;
     private CustomerRepository customerRepository;
 
