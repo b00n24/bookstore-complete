@@ -1,12 +1,15 @@
 package org.books.beans;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.books.application.exception.CustomerNotFoundException;
 import org.books.application.exception.InvalidCredentialsException;
-import org.books.persistence.Customer;
-import org.books.services.CustomerService;
+import org.books.application.service.CustomerService;
+import org.books.persistence.entity.Customer;
 import org.books.util.MessageFactory;
 
 /**
@@ -18,6 +21,7 @@ import org.books.util.MessageFactory;
 public class LoginBean implements Serializable {
     
     private static final String ERROR_INVALID_CREDENTIALS = "org.books.errorInvalidCredentials";
+    private static final String WARNING_USER_NOT_FOUND = "org.books.customerNotFound";
 
     @Inject
     private NavigationBean navigation;
@@ -64,9 +68,13 @@ public class LoginBean implements Serializable {
 
     public String login() {
 	try {
-	    customer = customerService.authenticate(email, password);
+	    customerService.authenticateCustomer(email, password);
+	    customer = customerService.findCustomer(email);
 	} catch (InvalidCredentialsException ex) {
 	    MessageFactory.error(ERROR_INVALID_CREDENTIALS);
+	    return null;
+	} catch (CustomerNotFoundException ex) {
+	    MessageFactory.error(WARNING_USER_NOT_FOUND);
 	    return null;
 	}
         return navigation.goToNextPage();

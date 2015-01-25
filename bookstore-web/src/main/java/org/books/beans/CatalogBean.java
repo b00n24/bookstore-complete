@@ -6,8 +6,8 @@ import java.util.List;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import org.books.persistence.Book;
-import org.books.services.CatalogService;
+import org.books.application.service.CatalogService;
+import org.books.persistence.entity.Book;
 import org.books.util.MessageFactory;
 
 /**

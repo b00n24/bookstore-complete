@@ -118,7 +118,7 @@ public class OrderServiceBean implements OrderServiceLocal, OrderServiceRemote {
 		throw new BookNotFoundException();
 	    }
 	    BigDecimal curAmount = book.getPrice().multiply(new BigDecimal(item.getQuantity()));
-	    amount.add(curAmount);
+	    amount = amount.add(curAmount);
 	    order.getItems().add(new LineItem(book, item.getQuantity()));
 	}
 	order.setAmount(amount);

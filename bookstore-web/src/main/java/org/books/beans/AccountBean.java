@@ -7,11 +7,13 @@ import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
+import org.books.application.exception.CustomerNotFoundException;
 import org.books.application.exception.InvalidOrderStatusException;
 import org.books.application.exception.OrderNotFoundException;
-import org.books.persistence.LineItem;
-import org.books.persistence.Order;
-import org.books.services.OrderService;
+import org.books.application.service.OrderService;
+import org.books.persistence.dto.OrderInfo;
+import org.books.persistence.entity.LineItem;
+import org.books.persistence.entity.Order;
 import org.books.util.MessageFactory;
 
 /**
@@ -24,6 +26,8 @@ public class AccountBean implements Serializable {
 
     private static final String ORDER_CANCEL_ERROR = "org.books.orderCancelError";
     private static final String INFO_NO_ORDERS_FOUND = "org.books.infoNoOrderFound";
+    // TODO SIR ist in mehrernen BEANS enthalten
+    private static final String WARNING_USER_NOT_FOUND = "org.books.customerNotFound";
 
     @Inject
     private OrderService orderService;
@@ -35,14 +39,15 @@ public class AccountBean implements Serializable {
     private NavigationBean navigationBean;
 
     private Integer searchYear;
-    private List<Order> searchResult = new LinkedList<>();
-    private Order selectedOrder;
+    private List<OrderInfo> searchResult = new LinkedList<>();
+    private OrderInfo selectedOrder;
 
-    public Order getSelectedOrder() {
-	return selectedOrder;
+    public Order getSelectedOrder() throws OrderNotFoundException {
+	Order order = orderService.findOrder(selectedOrder.getId());
+	return order;
     }
 
-    public List<Order> getSearchResult() {
+    public List<OrderInfo> getSearchResult() {
 	return searchResult;
     }
 
@@ -56,23 +61,28 @@ public class AccountBean implements Serializable {
 
     public void searchOrders() {
 	reset();
-	this.searchResult = orderService.searchOrders(loginBean.getCustomer(), searchYear);
+	try {
+	    this.searchResult = orderService.searchOrders(loginBean.getCustomer().getId(), searchYear);
+	} catch (CustomerNotFoundException ex) {
+	    MessageFactory.error(WARNING_USER_NOT_FOUND, loginBean.getEmail());
+	    return;
+	}
 	if (searchResult.isEmpty()) {
 	    MessageFactory.info(INFO_NO_ORDERS_FOUND);
 	}
     }
 
-    public String selectOrder(Order order) {
+    public String selectOrder(OrderInfo order) {
 	this.selectedOrder = order;
 	return navigationBean.goToOrderDetail();
     }
 
-    public void cancelOrder(Order order) {
+    public void cancelOrder(OrderInfo order) {
 	try {
-	    Order cancelOrder = orderService.cancelOrder(order.getId());
+	    orderService.cancelOrder(order.getId());
 	    int indexOf = searchResult.indexOf(order);
 	    searchResult.remove(order);
-	    searchResult.add(indexOf, cancelOrder);
+	    searchResult.add(indexOf, order);
 	} catch (OrderNotFoundException | InvalidOrderStatusException ex) {
 	    MessageFactory.error(ORDER_CANCEL_ERROR);
 	}
@@ -80,7 +90,14 @@ public class AccountBean implements Serializable {
 
     public BigDecimal getSelectedTotal() {
 	BigDecimal total = BigDecimal.ZERO;
-	for (LineItem lineItem : selectedOrder.getItems()) {
+	Order order = null;
+	try {
+	    // TODO SIR nicht wirklich schöne / optimal
+	    order = orderService.findOrder(selectedOrder.getId());
+	} catch (OrderNotFoundException ex) {
+	    MessageFactory.error(ORDER_CANCEL_ERROR);
+	}
+	for (LineItem lineItem : order.getItems()) {
 	    if (lineItem.getQuantity() != null) {
 		BigDecimal itemPrice = lineItem.getBook().getPrice().multiply(new BigDecimal(lineItem.getQuantity()));
 		total = total.add(itemPrice);

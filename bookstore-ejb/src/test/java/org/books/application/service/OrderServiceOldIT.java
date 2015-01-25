@@ -43,7 +43,7 @@ public class OrderServiceOldIT {
 
     protected final String firstName = "Homer";
     protected final String lastName = "Simpson";
-    protected final String email = "adrian.wyssen@students.bfh.ch";
+    protected final String email = "silvan.strueby@students.bfh.ch";
     protected final String cityName = "St. Ursen";
     protected final String isbn1 = "isbn1";
     protected final String title1 = "Title1";
@@ -184,33 +184,33 @@ public class OrderServiceOldIT {
 
     }
 
-    @AfterClass
-    public void tearDownClass() throws OrderNotFoundException {
-	em.getTransaction().begin();
-
-	if(createdOrderNmber != null){
-	    Order order = orderService.findOrder(createdOrderNmber);
-	    order = em.merge(order);
-	    em.remove(order);
-	} 
-	
-	Order o1 = em.merge(order);
-	em.remove(o1);
-	Customer c1 = em.merge(customer);
-	em.remove(c1);
-	Customer c2 = em.merge(customer2);
-	em.remove(c2);
-	Book b1 = em.merge(book1);
-	em.remove(b1);
-	Book b2 = em.merge(book2);
-	em.remove(b2);
-	Login l1 = em.merge(login);
-	em.remove(l1);
-	Login l2 = em.merge(login2);
-	em.remove(l2);
-
-	em.getTransaction().commit();
-    }
+//    @AfterClass
+//    public void tearDownClass() throws OrderNotFoundException {
+//	em.getTransaction().begin();
+//
+//	if(createdOrderNmber != null){
+//	    Order order = orderService.findOrder(createdOrderNmber);
+//	    order = em.merge(order);
+//	    em.remove(order);
+//	} 
+//	
+//	Order o1 = em.merge(order);
+//	em.remove(o1);
+//	Customer c1 = em.merge(customer);
+//	em.remove(c1);
+//	Customer c2 = em.merge(customer2);
+//	em.remove(c2);
+//	Book b1 = em.merge(book1);
+//	em.remove(b1);
+//	Book b2 = em.merge(book2);
+//	em.remove(b2);
+//	Login l1 = em.merge(login);
+//	em.remove(l1);
+//	Login l2 = em.merge(login2);
+//	em.remove(l2);
+//
+//	em.getTransaction().commit();
+//    }
 
     @Test
     public void placeOrder() throws CustomerNotFoundException, BookNotFoundException, PaymentFailedException, NamingException {

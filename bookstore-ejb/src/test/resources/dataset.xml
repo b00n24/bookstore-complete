@@ -30,10 +30,10 @@
             
     <CUSTOMER id="1" firstName="Homer" lastName="Simpson" email="homer@simpson.com" address_id="1" creditCard_id="1" />
     <CUSTOMER id="2" firstName="Marge" lastName="Simpson" email="marge@simpson.com" address_id="2" creditCard_id="2" />
-    <CUSTOMER id="3" firstName="John" lastName="Miller" email="john@miller.com" address_id="3" creditCard_id="3" />
+    <CUSTOMER id="3" firstName="John" lastName="Miller" email="silvan.strueby@students.bfh.ch" address_id="3" creditCard_id="3" />
     <LOGIN id="1" username="homer@simpson.com" password="simpson" />
     <LOGIN id="2" username="marge@simpson.com" password="simpson" />
-    <LOGIN id="3" username="john@miller.com" password="pass" />
+    <LOGIN id="3" username="silvan.strueby@students.bfh.ch" password="pass" />
     
     <BookOrder id="1" number="111" orderDate="2013-01-01" amount="333.00" status="processing" customer_id="1" address_id="4" creditCard_id="4" />
     <BookOrder id="2" number="222" orderDate="2013-01-01" amount="333.00" status="accepted" customer_id="1" address_id="5" creditCard_id="5" />

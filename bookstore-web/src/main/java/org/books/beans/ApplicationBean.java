@@ -10,8 +10,7 @@ import java.util.Locale;
 import javax.enterprise.context.ApplicationScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
-import org.books.persistence.CreditCard;
-import org.books.persistence.CreditCard.Type;
+import org.books.persistence.enums.Type;
 
 /**
  *
@@ -48,7 +47,7 @@ public class ApplicationBean implements Serializable {
     }
     
     public List<Type> getCreditCardTypes() {
-	return Arrays.asList(CreditCard.Type.values());
+	return Arrays.asList(Type.values());
     }
 
     public class Country {

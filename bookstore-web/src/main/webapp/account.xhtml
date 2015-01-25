@@ -86,7 +86,7 @@
 		    <f:facet name="header">
 			<h:outputText value="#{texts.orderConfirmationStatus}" />
 		    </f:facet>
-		    <h:outputText value="#{order.status.asString()}"/>
+		    <h:outputText value="#{order.status}"/>
 		</h:column>
 		<h:column>
 		    <h:commandButton value="#{texts.cancel}" action="#{accountBean.cancelOrder(order)}" rendered="#{order.status == 'accepted' || order.status == 'processing'}" />

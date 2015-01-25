@@ -6,9 +6,11 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import org.books.application.exception.CustomerNotFoundException;
 import org.books.application.exception.EmailAlreadyUsedException;
-import org.books.persistence.Customer;
-import org.books.services.CustomerService;
+import org.books.application.service.CustomerService;
+import org.books.persistence.entity.Customer;
+import org.books.persistence.entity.Login;
 import org.books.util.MessageFactory;
 
 /**
@@ -20,6 +22,7 @@ import org.books.util.MessageFactory;
 public class CustomerBean implements Serializable {
 
     private static final String WARNING_USER_EXISTS = "org.books.userExistsAlready";
+    private static final String WARNING_USER_NOT_FOUND = "org.books.customerNotFound";
 
     @Inject
     private CustomerService customerService;
@@ -29,9 +32,11 @@ public class CustomerBean implements Serializable {
     private NavigationBean navigationBean;
 
     private Customer customer;
+    private Login login;
 
     public CustomerBean() {
 	customer = new Customer();
+	login = new Login();
     }
 
     public Customer getCustomer() {
@@ -40,6 +45,14 @@ public class CustomerBean implements Serializable {
 
     public void setCustomer(Customer customer) {
 	this.customer = customer;
+    }
+
+    public Login getLogin() {
+	return login;
+    }
+
+    public void setLogin(Login login) {
+	this.login = login;
     }
 
     public String getCountry() {
@@ -53,7 +66,8 @@ public class CustomerBean implements Serializable {
 
     public String register() {
 	try {
-	    customerService.register(customer);
+	    // TODO SIR kein plan ob das OK!
+	    customerService.registerCustomer(customer, login.getPassword());
 	    return login();
 	} catch (EmailAlreadyUsedException ex) {
 	    //klappt noch nicht
@@ -69,6 +83,9 @@ public class CustomerBean implements Serializable {
 	} catch (EmailAlreadyUsedException ex) {
 	    MessageFactory.error(WARNING_USER_EXISTS, loginBean.getEmail());
 	    return null;
+	} catch (CustomerNotFoundException ex) {
+	    MessageFactory.error(WARNING_USER_NOT_FOUND, loginBean.getEmail());
+	    return null;
 	}
     }
 
@@ -79,7 +96,7 @@ public class CustomerBean implements Serializable {
      */
     private String login() {
 	loginBean.setEmail(customer.getEmail());
-	loginBean.setPassword(customer.getPassword());
+	loginBean.setPassword(login.getPassword());
 	return loginBean.login();
     }
 }

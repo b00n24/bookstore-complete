@@ -12,7 +12,7 @@ import javax.faces.convert.ConverterException;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
-import org.books.persistence.CreditCard;
+import org.books.persistence.enums.Type;
 
 import org.books.util.MessageFactory;
 
@@ -48,10 +48,10 @@ public class CreditCardNumberValidator implements Validator, StateHolder {
 	if (uIComponent == null) {
 	    throw new IllegalArgumentException("No component found for id: " + cardTypeId);
 	}
-	CreditCard.Type cardType = (CreditCard.Type) ((UIInput) uIComponent).getValue();
+	Type cardType = (Type) ((UIInput) uIComponent).getValue();
 
-	if ((CreditCard.Type.MasterCard.equals(cardType) && !number.substring(0, 2).matches("5[1-5]"))
-		|| (CreditCard.Type.Visa.equals(cardType) && !number.startsWith("4"))) {
+	if ((Type.MasterCard.equals(cardType) && !number.substring(0, 2).matches("5[1-5]"))
+		|| (Type.Visa.equals(cardType) && !number.startsWith("4"))) {
 	    throwError(VALIDATOR_NON_MATCHING_TYPE_AND_NUMBER);
 	}
     }

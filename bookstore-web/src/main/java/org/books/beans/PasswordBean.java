@@ -1,11 +1,14 @@
 package org.books.beans;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import org.books.application.exception.CustomerNotFoundException;
 import org.books.application.exception.EmailAlreadyUsedException;
-import org.books.services.CustomerService;
+import org.books.application.service.CustomerService;
 import org.books.util.MessageFactory;
 
 /**
@@ -19,6 +22,7 @@ public class PasswordBean implements Serializable {
     private static final String OLD_WRONG = "org.books.passwordOldWrong";
     private static final String OLD_NEW_NOT_EQUAL = "org.books.passwordNewNotEqual";
     private static final String COULD_NOT_SAVE = "org.books.passwordCouldNotSave";
+    private static final String WARNING_USER_NOT_FOUND = "org.books.customerNotFound";
 
     private String oldPassword;
     private String newPassword;
@@ -56,7 +60,7 @@ public class PasswordBean implements Serializable {
     }
 
     public String change() {
-	if (loginBean.getCustomer() == null || !oldPassword.equals(loginBean.getCustomer().getPassword())) {
+	if (loginBean.getCustomer() == null || !oldPassword.equals(loginBean.getPassword())) {
 	    MessageFactory.error(OLD_WRONG);
 	    return null;
 	}
@@ -68,10 +72,13 @@ public class PasswordBean implements Serializable {
 
 	try {
 	    // Set new password and save
-	    loginBean.getCustomer().setPassword(newPassword);
+	    loginBean.setPassword(newPassword);
 	    customerService.updateCustomer(loginBean.getCustomer());
 	} catch (EmailAlreadyUsedException ex) {
 	    MessageFactory.error(COULD_NOT_SAVE);
+	    return null;
+	} catch (CustomerNotFoundException ex) {
+	    MessageFactory.error(WARNING_USER_NOT_FOUND);
 	    return null;
 	}
 	return navigationBean.goBack();

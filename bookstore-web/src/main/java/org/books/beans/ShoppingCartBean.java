@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import org.books.persistence.Book;
-import org.books.persistence.LineItem;
+import org.books.persistence.entity.Book;
+import org.books.persistence.entity.LineItem;
 
 /**
  *
