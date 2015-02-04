@@ -22,6 +22,7 @@ public interface CatalogService {
 
     /**
      * Finds a book with a particular ISBN number.
+     * If the book is not stored localy yet, we search on amazon.
      *
      * @param isbn the ISBN number
      * @return the found book
