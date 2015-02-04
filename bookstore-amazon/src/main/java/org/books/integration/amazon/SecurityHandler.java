@@ -1,4 +1,4 @@
-package org.books.integration;
+package org.books.integration.amazon;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;

@@ -1,4 +1,4 @@
-package org.books.integration;
+package org.books.integration.amazon;
 
 public class AmazonException extends Exception {
 

@@ -1,4 +1,4 @@
-package org.books.integration;
+package org.books.integration.amazon;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;

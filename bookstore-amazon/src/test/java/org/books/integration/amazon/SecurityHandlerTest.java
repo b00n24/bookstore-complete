@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package org.books.integration;
+package org.books.integration.amazon;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
