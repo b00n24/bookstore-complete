@@ -8,5 +8,5 @@ package org.books.persistence.enums;
 // Enums asugelagert sind.
 public enum Binding {
 
-    Hardcover, Paperback
+    Hardcover, Paperback, Unknown
 }
