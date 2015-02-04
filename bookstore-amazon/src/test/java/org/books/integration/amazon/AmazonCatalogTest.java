@@ -31,10 +31,23 @@ public class AmazonCatalogTest {
 	List<Book> books = amazonCatalog.itemSearch(keywords);
 	assertFalse(books.isEmpty());
     }
-    
+
     @Test
     public void searchBooks_notMoreThan100() throws AmazonException {
 	List<Book> books = amazonCatalog.itemSearch("Java");
 	assertTrue(books.size() <= 100);
     }
+
+//    @Test
+//    public void searchBooks_multipleThreads() throws AmazonException {
+//
+//	for (int i = 0; i < 10; i++) {
+//	    searchAndAssert();
+//	}
+//    }
+//
+//    private void searchAndAssert() throws AmazonException {
+//	List<Book> books = amazonCatalog.itemSearch("Java");
+//	assertFalse(books.isEmpty());
+//    }
 }

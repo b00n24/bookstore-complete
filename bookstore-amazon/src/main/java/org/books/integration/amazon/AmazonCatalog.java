@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import org.books.persistence.entity.Book;
 import org.books.persistence.enums.Binding;
@@ -29,7 +30,6 @@ import org.books.persistence.enums.Binding;
 public class AmazonCatalog {
 
     private static final int MAX_NBR_OF_PAGES = 10;
-    private static final int MINIMAL_AMAZON_SERVICE_WAITING_TIME = 3000;    // Time to wait for between requests in milliseconds
 
     private static final String HARDCOVER = "Hardcover";
     private static final String PAPERBACK = "Paperback";
@@ -39,13 +39,20 @@ public class AmazonCatalog {
 
     private AWSECommerceServicePortType proxy;
 
+    @EJB
+    private AmazonTimeGuard timeGuard;
+
     @PostConstruct
     public void init() {
 	AWSECommerceService service = new AWSECommerceService();
 	proxy = service.getAWSECommerceServicePort();
+	if(timeGuard == null) {
+	    timeGuard = new AmazonTimeGuard();
+	}
     }
 
     public Book itemLookup(String isbn) throws AmazonException {
+	await();
 	final ItemLookupResponse response = proxy.itemLookup(createItemLookup(isbn));
 
 	for (Items items : response.getItems()) {
@@ -65,17 +72,8 @@ public class AmazonCatalog {
 
     public List<Book> itemSearch(String keywords) throws AmazonException {
 	List<Book> result = new ArrayList<>();
-	long previousStartTime = 0;
 	for (int currentPage = 1; currentPage <= MAX_NBR_OF_PAGES; currentPage++) {
-	    long currentTimeMillis = System.currentTimeMillis();
-	    if (currentTimeMillis - previousStartTime < MINIMAL_AMAZON_SERVICE_WAITING_TIME) {
-		try {
-		    Thread.sleep(currentTimeMillis - previousStartTime);
-		} catch (InterruptedException ex) {
-		    Logger.getLogger(AmazonCatalog.class.getName()).log(Level.SEVERE, null, ex);
-		}
-	    }
-	    previousStartTime = System.currentTimeMillis();
+	    await();
 	    final ItemSearchResponse response = proxy.itemSearch(createItemSearch(keywords, currentPage));
 
 	    for (Items items : response.getItems()) {
@@ -92,6 +90,20 @@ public class AmazonCatalog {
 	    }
 	}
 	return result;
+    }
+
+    /**
+     * Sleeps if necessary and sets the lastStartTime
+     */
+    private void await() {
+	if (timeGuard.isSafe(System.currentTimeMillis())) {
+	    try {
+		Thread.sleep(timeGuard.getSleepingTime(System.currentTimeMillis()));
+	    } catch (InterruptedException ex) {
+		Logger.getLogger(AmazonCatalog.class.getName()).log(Level.SEVERE, "Could not sleep", ex);
+	    }
+	}
+	timeGuard.setLastStartTime(System.currentTimeMillis());
     }
 
     private ItemLookup createItemLookup(String isbn) {
