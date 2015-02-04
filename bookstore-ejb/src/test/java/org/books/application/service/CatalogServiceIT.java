@@ -21,7 +21,7 @@ import org.testng.annotations.Test;
  */
 public class CatalogServiceIT {
 
-    private static final String SERVICE_NAME = "java:global/bookstore-app/bookstore-ejb/CatalogService";
+    private static final String SERVICE_NAME = "java:global/bookstore-app/bookstore-ejb/CatalogService!org.books.application.service.CatalogServiceLocal";
     private static final String DB_UNIT_PROPERTIES = "/dbunit.properties";
     private static final String DB_UNIT_DATASET = "/dataset.xml";
 

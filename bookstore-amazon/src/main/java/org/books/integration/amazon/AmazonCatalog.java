@@ -129,6 +129,9 @@ public class AmazonCatalog {
     }
 
     private Binding getBinding(String bindingString) {
+	if(bindingString == null){
+	    return Binding.Unknown;
+	}
 	switch (bindingString) {
 	    case HARDCOVER:
 		return Binding.Hardcover;
