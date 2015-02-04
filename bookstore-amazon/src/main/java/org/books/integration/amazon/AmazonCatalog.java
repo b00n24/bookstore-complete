@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
@@ -27,13 +28,16 @@ import org.books.persistence.enums.Binding;
 @Stateless
 public class AmazonCatalog {
 
-    private AWSECommerceServicePortType proxy;
+    private static final int MAX_NBR_OF_PAGES = 10;
+    private static final int MINIMAL_AMAZON_SERVICE_WAITING_TIME = 3000;    // Time to wait for between requests in milliseconds
 
     private static final String HARDCOVER = "Hardcover";
     private static final String PAPERBACK = "Paperback";
     private static final String ITEM_ATTRIBUTES = "ItemAttributes";
     private static final String BOOKS = "Books";
     private static final String ISBN = "ISBN";
+
+    private AWSECommerceServicePortType proxy;
 
     @PostConstruct
     public void init() {
@@ -50,23 +54,41 @@ public class AmazonCatalog {
 		continue;
 	    }
 	    for (Item item : items.getItem()) {
-		return getBook(item);
+		Book book = getBook(item);
+		if (isComplete(book)) {
+		    return book;
+		}
 	    }
 	}
 	return null;
     }
 
     public List<Book> itemSearch(String keywords) throws AmazonException {
-	final ItemSearchResponse response = proxy.itemSearch(createItemSearch(keywords));
-
 	List<Book> result = new ArrayList<>();
-	for (Items items : response.getItems()) {
-	    checkForErrors(items);
-	    if (!isValid(items)) {
-		continue;
+	long previousStartTime = 0;
+	for (int currentPage = 1; currentPage <= MAX_NBR_OF_PAGES; currentPage++) {
+	    long currentTimeMillis = System.currentTimeMillis();
+	    if (currentTimeMillis - previousStartTime < MINIMAL_AMAZON_SERVICE_WAITING_TIME) {
+		try {
+		    Thread.sleep(currentTimeMillis - previousStartTime);
+		} catch (InterruptedException ex) {
+		    Logger.getLogger(AmazonCatalog.class.getName()).log(Level.SEVERE, null, ex);
+		}
 	    }
-	    for (Item item : items.getItem()) {
-		result.add(getBook(item));
+	    previousStartTime = System.currentTimeMillis();
+	    final ItemSearchResponse response = proxy.itemSearch(createItemSearch(keywords, currentPage));
+
+	    for (Items items : response.getItems()) {
+		checkForErrors(items);
+		if (!isValid(items)) {
+		    continue;
+		}
+		for (Item item : items.getItem()) {
+		    Book book = getBook(item);
+		    if (isComplete(book)) {
+			result.add(book);
+		    }
+		}
 	    }
 	}
 	return result;
@@ -83,11 +105,12 @@ public class AmazonCatalog {
 	return itemLookup;
     }
 
-    private ItemSearch createItemSearch(String keywords) {
+    private ItemSearch createItemSearch(String keywords, int pageIndex) {
 	ItemSearch itemSearch = new ItemSearch();
 	ItemSearchRequest request = new ItemSearchRequest();
 	request.setSearchIndex(BOOKS);
 	request.getResponseGroup().add(ITEM_ATTRIBUTES);
+	request.setItemPage(BigInteger.valueOf(pageIndex));
 	request.setKeywords(keywords);
 	itemSearch.getRequest().add(request);
 	return itemSearch;
@@ -107,6 +130,7 @@ public class AmazonCatalog {
     private Book getBook(Item item) {
 	Book book = new Book();
 	ItemAttributes attributes = item.getItemAttributes();
+	book.setIsbn(attributes.getISBN());
 	book.setTitle(attributes.getTitle());
 	StringBuilder sb = new StringBuilder();
 	boolean prefix = false;
@@ -120,10 +144,12 @@ public class AmazonCatalog {
 	book.setAuthors(sb.toString());
 	book.setPublisher(attributes.getPublisher());
 	Integer year = null;
-	try {
-	    year = Integer.parseInt(attributes.getPublicationDate().substring(0, 4));
-	} catch (Exception e) {
-	    Logger.getLogger(AmazonCatalog.class.getName()).warning("Could not parse the year.");
+	if (attributes.getPublicationDate() != null) {
+	    try {
+		year = Integer.parseInt(attributes.getPublicationDate().substring(0, 4));
+	    } catch (Exception e) {
+		Logger.getLogger(AmazonCatalog.class.getName()).warning("Could not parse the year.");
+	    }
 	}
 	book.setPublicationYear(year);
 	book.setBinding(getBinding(attributes.getBinding()));
@@ -136,11 +162,11 @@ public class AmazonCatalog {
     private BigDecimal getPrice(ItemAttributes attributes) {
 	final Price listPrice = attributes.getListPrice();
 	if (listPrice == null) {
-	    return BigDecimal.ZERO;
+	    return null;
 	}
 	final BigInteger amount = listPrice.getAmount();
 	if (amount == null) {
-	    return BigDecimal.ZERO;
+	    return null;
 	}
 	return new BigDecimal(amount, 2);
     }
@@ -157,5 +183,20 @@ public class AmazonCatalog {
 	for (Errors.Error error : request.getErrors().getError()) {
 	    throw new AmazonException(error.getMessage(), error.getCode());
 	}
+    }
+
+    private boolean isComplete(Book book) {
+	return isNotNullOrEmpty(book.getAuthors())
+		&& book.getBinding() != null
+		&& isNotNullOrEmpty(book.getIsbn())
+		&& book.getNumberOfPages() != null
+		&& book.getPrice() != null
+		&& book.getPublicationYear() != null
+		&& isNotNullOrEmpty(book.getPublisher())
+		&& isNotNullOrEmpty(book.getTitle());
+    }
+
+    private boolean isNotNullOrEmpty(String s) {
+	return s != null && !(s.isEmpty());
     }
 }
