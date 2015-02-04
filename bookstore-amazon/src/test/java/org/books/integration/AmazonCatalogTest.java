@@ -13,13 +13,13 @@ public class AmazonCatalogTest {
     private static final String isbn = "013390069X";
     private static final String keywords = "Java EE";
 
-    @Test
+//    @Test
     public void findBook() throws AmazonException {
 	Book book = amazonCatalog.itemLookup(isbn);
 	assertNotNull(book);
     }
 
-    @Test
+//    @Test
     public void searchBooks() throws AmazonException {
 	List<Book> books = amazonCatalog.itemSearch(keywords);
 	assertFalse(books.isEmpty());
