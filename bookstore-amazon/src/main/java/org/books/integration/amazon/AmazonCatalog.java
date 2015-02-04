@@ -13,6 +13,7 @@ import com.amazon.webservices.ItemSearchRequest;
 import com.amazon.webservices.ItemSearchResponse;
 import com.amazon.webservices.Items;
 import com.amazon.webservices.Price;
+import com.amazon.webservices.Request;
 import com.sun.istack.internal.logging.Logger;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -41,9 +42,6 @@ public class AmazonCatalog {
     }
 
     public Book itemLookup(String isbn) throws AmazonException {
-	if (proxy == null) {
-	    init();
-	}
 	final ItemLookupResponse response = proxy.itemLookup(createItemLookup(isbn));
 
 	for (Items items : response.getItems()) {
@@ -59,9 +57,6 @@ public class AmazonCatalog {
     }
 
     public List<Book> itemSearch(String keywords) throws AmazonException {
-	if (proxy == null) {
-	    init();
-	}
 	final ItemSearchResponse response = proxy.itemSearch(createItemSearch(keywords));
 
 	List<Book> result = new ArrayList<>();
@@ -147,7 +142,7 @@ public class AmazonCatalog {
 	if (amount == null) {
 	    return BigDecimal.ZERO;
 	}
-	return new BigDecimal(amount.divide(BigInteger.valueOf(100)));
+	return new BigDecimal(amount, 2);
     }
 
     private boolean isValid(Items items) {
@@ -155,7 +150,11 @@ public class AmazonCatalog {
     }
 
     private void checkForErrors(Items items) throws AmazonException {
-	for (Errors.Error error : items.getRequest().getErrors().getError()) {
+	final Request request = items.getRequest();
+	if (request == null || request.getErrors() == null || request.getErrors().getError() == null) {
+	    return;
+	}
+	for (Errors.Error error : request.getErrors().getError()) {
 	    throw new AmazonException(error.getMessage(), error.getCode());
 	}
     }

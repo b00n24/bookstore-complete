@@ -6,12 +6,18 @@ import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertFalse;
 import static org.testng.Assert.assertNotNull;
+import org.testng.annotations.BeforeClass;
 
 public class AmazonCatalogTest {
 
     private static final AmazonCatalog amazonCatalog = new AmazonCatalog();
     private static final String isbn = "013390069X";
     private static final String keywords = "Java EE";
+
+    @BeforeClass
+    public void setupClass() {
+	amazonCatalog.init();
+    }
 
     @Test
     public void findBook() throws AmazonException {
