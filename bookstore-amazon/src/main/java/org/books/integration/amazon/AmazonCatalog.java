@@ -13,6 +13,7 @@ import com.amazon.webservices.ItemSearchRequest;
 import com.amazon.webservices.ItemSearchResponse;
 import com.amazon.webservices.Items;
 import com.amazon.webservices.Price;
+import com.sun.istack.internal.logging.Logger;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -46,10 +47,10 @@ public class AmazonCatalog {
 	final ItemLookupResponse response = proxy.itemLookup(createItemLookup(isbn));
 
 	for (Items items : response.getItems()) {
+	    checkForErrors(items);
 	    if (!isValid(items)) {
 		continue;
 	    }
-	    checkForErrors(items);
 	    for (Item item : items.getItem()) {
 		return getBook(item);
 	    }
@@ -65,11 +66,10 @@ public class AmazonCatalog {
 
 	List<Book> result = new ArrayList<>();
 	for (Items items : response.getItems()) {
+	    checkForErrors(items);
 	    if (!isValid(items)) {
 		continue;
 	    }
-	    checkForErrors(items);
-
 	    for (Item item : items.getItem()) {
 		result.add(getBook(item));
 	    }
@@ -128,7 +128,7 @@ public class AmazonCatalog {
 	try {
 	    year = Integer.parseInt(attributes.getPublicationDate().substring(0, 4));
 	} catch (Exception e) {
-	    // TODO LOG
+	    Logger.getLogger(AmazonCatalog.class).warning("Could not parse the year.");
 	}
 	book.setPublicationYear(year);
 	book.setBinding(getBinding(attributes.getBinding()));
