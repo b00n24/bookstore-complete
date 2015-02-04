@@ -20,8 +20,6 @@ import javax.xml.soap.SOAPHeader;
 import javax.xml.ws.handler.MessageContext;
 import javax.xml.ws.handler.soap.SOAPHandler;
 import javax.xml.ws.handler.soap.SOAPMessageContext;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 
@@ -54,22 +52,9 @@ public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 	    // Calculate data
 	    // -------------------------------------------	    
 	    final SOAPBody soapBody = context.getMessage().getSOAPBody();
-
-	    Logger.getLogger(SecurityHandler.class.getName()).log(Level.SEVERE, "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX=================XXXXXXXXXX");
-	    Logger.getLogger(SecurityHandler.class.getName()).log(Level.SEVERE, context.getMessage().toString());
-	    Logger.getLogger(SecurityHandler.class.getName()).log(Level.SEVERE, soapBody.toString());
-	    Logger.getLogger(SecurityHandler.class.getName()).log(Level.SEVERE, soapBody.getChildElements().toString());
-	    Logger.getLogger(SecurityHandler.class.getName()).log(Level.SEVERE, soapBody.getChildElements().next().toString());
-	    Logger.getLogger(SecurityHandler.class.getName()).log(Level.SEVERE, soapBody.getChildElements().next().toString());
-	    Logger.getLogger(SecurityHandler.class.getName()).log(Level.SEVERE, soapBody.getFirstChild().toString());
-
-	    NodeList childNodes = soapBody.getChildNodes();
-	    Node item = childNodes.item(0); 
-	    String method = item.getNodeName();
 	    
-	    
-//	    SOAPElement methodElement = (SOAPElement) soapBody.getChildElements().next();
-//	    String method = methodElement.getTagName();
+	    SOAPElement methodElement = (SOAPElement) soapBody.getChildElements().next();
+	    String method = methodElement.getTagName();
 	    
 	    DateFormat dateFormat = new SimpleDateFormat(TIMESTAMP_FORMAT);
 	    String timestamp = dateFormat.format(Calendar.getInstance().getTime());
@@ -102,8 +87,8 @@ public class SecurityHandler implements SOAPHandler<SOAPMessageContext> {
 	    // manipulate Body
 	    // -------------------------------------------	
 	    // AssociateTag
-//	    SOAPElement associateTagElement = methodElement.addChildElement(ASSOCIATE_TAG);
-//	    associateTagElement.setValue(ASSOCIATE_TAG_VALUE);
+	    SOAPElement associateTagElement = methodElement.addChildElement(ASSOCIATE_TAG);
+	    associateTagElement.setValue(ASSOCIATE_TAG_VALUE);
 
 	    return true;
 	} catch (NoSuchAlgorithmException | InvalidKeyException | SOAPException ex) {
