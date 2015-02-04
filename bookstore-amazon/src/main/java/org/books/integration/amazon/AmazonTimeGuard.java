@@ -12,15 +12,15 @@ public class AmazonTimeGuard {
 
     private long lastStartTime = 0;
 
-    public void setLastStartTime(long time) {
-	this.lastStartTime = time;
+    public void setLastStartTime() {
+	this.lastStartTime = System.currentTimeMillis();
     }
 
-    public boolean isSafe(long time) {
-	return time - lastStartTime < MINIMAL_AMAZON_SERVICE_WAITING_TIME;
+    public boolean isSafe() {
+	return (System.currentTimeMillis() - lastStartTime) > MINIMAL_AMAZON_SERVICE_WAITING_TIME;
     }
 
-    public long getSleepingTime(long time) {
-	return time - lastStartTime;
+    public long getSleepingTime() {
+	return System.currentTimeMillis() - lastStartTime;
     }
 }

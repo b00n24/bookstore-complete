@@ -18,6 +18,7 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -29,7 +30,8 @@ import org.books.persistence.enums.Binding;
 @Stateless
 public class AmazonCatalog {
 
-    private static final int MAX_NBR_OF_PAGES = 10;
+    private static final long MAX_NBR_OF_PAGES = 10;
+    private static final int POLLING_TIMEOUT = 10;
 
     private static final String HARDCOVER = "Hardcover";
     private static final String PAPERBACK = "Paperback";
@@ -39,6 +41,8 @@ public class AmazonCatalog {
 
     private AWSECommerceServicePortType proxy;
 
+    static AtomicLong counter = new AtomicLong(0);
+
     @EJB
     private AmazonTimeGuard timeGuard;
 
@@ -46,7 +50,7 @@ public class AmazonCatalog {
     public void init() {
 	AWSECommerceService service = new AWSECommerceService();
 	proxy = service.getAWSECommerceServicePort();
-	if(timeGuard == null) {
+	if (timeGuard == null) {
 	    timeGuard = new AmazonTimeGuard();
 	}
     }
@@ -72,11 +76,15 @@ public class AmazonCatalog {
 
     public List<Book> itemSearch(String keywords) throws AmazonException {
 	List<Book> result = new ArrayList<>();
-	for (int currentPage = 1; currentPage <= MAX_NBR_OF_PAGES; currentPage++) {
+	int currentPage = 0;
+	BigInteger totalPages = BigInteger.TEN;
+	do {
+	    System.out.println(counter.incrementAndGet());
+	    currentPage++;
 	    await();
 	    final ItemSearchResponse response = proxy.itemSearch(createItemSearch(keywords, currentPage));
-
 	    for (Items items : response.getItems()) {
+		totalPages = items.getTotalPages();
 		checkForErrors(items);
 		if (!isValid(items)) {
 		    continue;
@@ -88,7 +96,7 @@ public class AmazonCatalog {
 		    }
 		}
 	    }
-	}
+	} while (currentPage < Math.min(MAX_NBR_OF_PAGES, totalPages.longValue()));
 	return result;
     }
 
@@ -96,14 +104,14 @@ public class AmazonCatalog {
      * Sleeps if necessary and sets the lastStartTime
      */
     private void await() {
-	if (timeGuard.isSafe(System.currentTimeMillis())) {
+	while (!timeGuard.isSafe()) {
 	    try {
-		Thread.sleep(timeGuard.getSleepingTime(System.currentTimeMillis()));
+		Thread.sleep(POLLING_TIMEOUT);
 	    } catch (InterruptedException ex) {
 		Logger.getLogger(AmazonCatalog.class.getName()).log(Level.SEVERE, "Could not sleep", ex);
 	    }
 	}
-	timeGuard.setLastStartTime(System.currentTimeMillis());
+	timeGuard.setLastStartTime();
     }
 
     private ItemLookup createItemLookup(String isbn) {
@@ -129,6 +137,9 @@ public class AmazonCatalog {
     }
 
     private Binding getBinding(String bindingString) {
+	if (bindingString == null) {
+	    return Binding.Unknown;
+	}
 	switch (bindingString) {
 	    case HARDCOVER:
 		return Binding.Hardcover;
