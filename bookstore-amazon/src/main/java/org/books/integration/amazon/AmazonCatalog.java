@@ -14,11 +14,11 @@ import com.amazon.webservices.ItemSearchResponse;
 import com.amazon.webservices.Items;
 import com.amazon.webservices.Price;
 import com.amazon.webservices.Request;
-import com.sun.istack.internal.logging.Logger;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
 import org.books.persistence.entity.Book;
@@ -123,7 +123,7 @@ public class AmazonCatalog {
 	try {
 	    year = Integer.parseInt(attributes.getPublicationDate().substring(0, 4));
 	} catch (Exception e) {
-	    Logger.getLogger(AmazonCatalog.class).warning("Could not parse the year.");
+	    Logger.getLogger(AmazonCatalog.class.getName()).warning("Could not parse the year.");
 	}
 	book.setPublicationYear(year);
 	book.setBinding(getBinding(attributes.getBinding()));
