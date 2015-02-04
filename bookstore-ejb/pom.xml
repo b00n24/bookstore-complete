@@ -27,6 +27,11 @@
 	    <artifactId>bookstore-jpa</artifactId>
 	    <version>${project.version}</version>
 	</dependency>
+	<dependency>
+	    <groupId>org.books</groupId>
+	    <artifactId>bookstore-amazon</artifactId>
+	    <version>${project.version}</version>
+	</dependency>
     </dependencies>
 
     <build>

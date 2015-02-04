@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+	<artifactId>bookstore</artifactId>
+	<groupId>org.books</groupId>
+	<version>1.0</version>
+    </parent>
+    
+    <groupId>org.books</groupId>
+    <artifactId>bookstore-amazon</artifactId>
+    <version>1.0</version>
+    <packaging>ejb</packaging>
+    <name>bookstore-amazon</name>
+
+    <properties>
+	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
+
+    <dependencies>
+	<dependency>
+	    <groupId>org.books</groupId>
+	    <artifactId>bookstore-jpa</artifactId>
+	    <version>${project.version}</version>
+	</dependency>
+	<dependency>
+	    <groupId>org.testng</groupId>
+	    <artifactId>testng</artifactId>
+	    <version>6.8</version>
+	    <scope>test</scope>
+	</dependency>
+    </dependencies>
+
+    <build>
+	<plugins>
+	    <plugin>
+		<groupId>org.jvnet.jax-ws-commons</groupId>
+		<artifactId>jaxws-maven-plugin</artifactId>
+		<version>2.3</version>
+		<!-- Workaround for Bug JAX_WS_COMMONS-129 -->
+		<configuration>
+		    <vmArgs>
+			<vmArg>-Djavax.xml.accessExternalSchema=all</vmArg>
+		    </vmArgs>
+		</configuration>
+		<executions>
+		    <execution>
+			<phase>generate-sources</phase>
+			<goals>
+			    <goal>wsimport</goal>
+			</goals>
+			<configuration>
+			    <wsdlUrls>
+				<wsdlUrl>http://webservices.amazon.com/AWSECommerceService/AWSECommerceService.wsdl</wsdlUrl>
+			    </wsdlUrls>
+			    <packageName>com.amazon.webservices</packageName>
+			    <sourceDestDir>${project.build.directory}/generated-sources/wsimport</sourceDestDir>
+			    <destDir>${project.build.directory}/generated-sources/handler</destDir>
+			    <bindingFiles>
+				<bindingFile>${basedir}/src/main/config/bindings.xml</bindingFile>
+			    </bindingFiles>
+			</configuration>
+		    </execution>
+		</executions>
+	    </plugin>
+	    <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-ejb-plugin</artifactId>
+		<version>2.4</version>
+		<configuration>
+		    <ejbVersion>3.2</ejbVersion>
+		</configuration>
+	    </plugin>
+	    <plugin>
+		<groupId>org.apache.maven.plugins</groupId>
+		<artifactId>maven-failsafe-plugin</artifactId>
+		<version>2.17</version>
+	    </plugin>
+	</plugins>
+
+	<resources>
+	    <resource>
+		<directory>src/main/resources</directory>
+	    </resource>
+	    <resource>
+		<directory>${project.build.directory}/generated-sources/handler</directory>
+	    </resource>
+	</resources>
+    </build>
+
+</project>
