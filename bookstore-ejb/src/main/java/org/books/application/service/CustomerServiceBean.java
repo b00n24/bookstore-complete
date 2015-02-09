@@ -90,6 +90,10 @@ public class CustomerServiceBean implements CustomerServiceLocal, CustomerServic
 	    throw new EmailAlreadyUsedException();
 	}
 	customerRepository.update(customer);
+
+	final Login login = customerRepository.findLoginByUserName(foundByMail.getEmail());
+	login.setUserName(customer.getEmail());
+	customerRepository.update(login);
     }
 
     private Customer checkCustomerFound(Customer customer) throws CustomerNotFoundException {

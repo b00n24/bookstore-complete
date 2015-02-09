@@ -57,7 +57,7 @@ public class OrderServiceIT {
 	databaseTester.setDataSet(dataset);
 	databaseTester.onSetup();
     }
-    
+
     public void cancelOrder() throws OrderNotFoundException, InvalidOrderStatusException {
 	// WHEN
 	service.cancelOrder(ORDER_ID);
@@ -142,7 +142,7 @@ public class OrderServiceIT {
     }
 
     @Test
-    public void placeOrder() throws CustomerNotFoundException, BookNotFoundException, PaymentFailedException{
+    public void placeOrder() throws CustomerNotFoundException, BookNotFoundException, PaymentFailedException {
 	List<OrderItem> orderItems = new LinkedList();
 	OrderItem orderItem = new OrderItem();
 	orderItem.setIsbn(ISBN);
@@ -155,7 +155,23 @@ public class OrderServiceIT {
 	// THEN
 	String createdOrderNmber = order.getNumber();
 	Assert.assertNotNull(createdOrderNmber);
+    }
 
+    @Test
+    public void placeOrder_checkById() throws CustomerNotFoundException, BookNotFoundException, PaymentFailedException, OrderNotFoundException {
+	List<OrderItem> orderItems = new LinkedList();
+	OrderItem orderItem = new OrderItem();
+	orderItem.setIsbn(ISBN);
+	orderItem.setQuantity(1);
+	orderItems.add(orderItem);
+
+	// WHEN
+	OrderInfo order = service.placeOrder(CUSTOMER_ID, orderItems);
+	Long orderId = order.getId();
+	final Order result = service.findOrder(orderId);
+
+	// THEN
+	Assert.assertNotNull(result);
     }
 
     @Test

@@ -199,4 +199,22 @@ public class CustomerServiceIT {
 	customer.setEmail("john@miller.com");
 	service.updateCustomer(customer);
     }
+
+    @Test
+    public void updateCustomer_updatesLogin() throws CustomerNotFoundException, EmailAlreadyUsedException, InvalidCredentialsException {
+	// GIVEN
+	Customer customer = service.findCustomer(ID);
+	final String oldEmail = customer.getEmail();
+
+	// WHEN
+	customer.setEmail("email@new.com");
+	service.updateCustomer(customer);
+
+	// THEN
+	service.authenticateCustomer("email@new.com", PASS);
+
+	// Revert
+	customer.setEmail(oldEmail);
+	service.updateCustomer(customer);
+    }
 }

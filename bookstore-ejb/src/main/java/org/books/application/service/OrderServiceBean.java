@@ -135,7 +135,7 @@ public class OrderServiceBean implements OrderServiceLocal, OrderServiceRemote {
 	    Logger.getLogger(OrderServiceBean.class.getName()).log(Level.SEVERE, "Could not put order in processing queue", ex);
 	}
 	// PaymentFailedException will be used when we work with paypal
-	OrderInfo orderInfo = new OrderInfo(customerId, order.getNumber(), order.getDate(), order.getAmount(), order.getStatus());
+	OrderInfo orderInfo = new OrderInfo(order.getId(), order.getNumber(), order.getDate(), order.getAmount(), order.getStatus());
 	return orderInfo;
     }
 
