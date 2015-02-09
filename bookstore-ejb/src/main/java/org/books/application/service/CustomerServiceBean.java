@@ -84,14 +84,15 @@ public class CustomerServiceBean implements CustomerServiceLocal, CustomerServic
     @Override
     public void updateCustomer(Customer customer) throws CustomerNotFoundException, EmailAlreadyUsedException {
 	Customer foundCustomer = customerRepository.findById(customer.getId());
+	String oldEmail = foundCustomer.getEmail();
 	checkCustomerFound(foundCustomer);
 	Customer foundByMail = customerRepository.findByMail(customer.getEmail());
-	if (!foundCustomer.getId().equals(foundByMail.getId())) {
+	if (foundByMail != null && !foundCustomer.getId().equals(foundByMail.getId())) {
 	    throw new EmailAlreadyUsedException();
 	}
 	customerRepository.update(customer);
 
-	final Login login = customerRepository.findLoginByUserName(foundByMail.getEmail());
+	final Login login = customerRepository.findLoginByUserName(oldEmail);
 	login.setUserName(customer.getEmail());
 	customerRepository.update(login);
     }
