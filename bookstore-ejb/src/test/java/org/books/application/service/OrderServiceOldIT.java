@@ -37,7 +37,7 @@ import org.testng.annotations.Test;
  */
 public class OrderServiceOldIT {
 
-    private static final String ORDER_SERVICE_NAME = "java:global/bookstore-app/bookstore-ejb/OrderService";
+    private static final String ORDER_SERVICE_NAME = "java:global/bookstore-app/bookstore-ejb/OrderService!org.books.application.service.OrderServiceRemote";
 
     private OrderService orderService;
 

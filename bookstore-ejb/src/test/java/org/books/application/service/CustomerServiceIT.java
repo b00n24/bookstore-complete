@@ -29,7 +29,7 @@ import org.testng.annotations.Test;
  */
 public class CustomerServiceIT {
 
-    private static final String SERVICE_NAME = "java:global/bookstore-app/bookstore-ejb/CustomerService";
+    private static final String SERVICE_NAME = "java:global/bookstore-app/bookstore-ejb/CustomerService!org.books.application.service.CustomerServiceRemote";
     private static final String DB_UNIT_PROPERTIES = "/dbunit.properties";
     private static final String DB_UNIT_DATASET = "/dataset.xml";
 
@@ -177,6 +177,7 @@ public class CustomerServiceIT {
 	final String oldFirstname = customer.getFirstName();
 
 	// WHEN
+//	customer.setId(0L);
 	customer.setFirstName("newFirstname");
 	service.updateCustomer(customer);
 
@@ -186,16 +187,6 @@ public class CustomerServiceIT {
 
 	// Revert
 	customer.setFirstName(oldFirstname);
-	service.updateCustomer(customer);
-    }
-
-    @Test(expectedExceptions = CustomerNotFoundException.class)
-    public void updateCustomer_nonExistingCustomer() throws CustomerNotFoundException, EmailAlreadyUsedException {
-	// GIVEN
-	Customer customer = new Customer();
-	customer.setEmail("nonExisting");
-
-	// WHEN
 	service.updateCustomer(customer);
     }
 
