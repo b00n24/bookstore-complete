@@ -37,7 +37,7 @@ public class CustomerResource {
     @POST
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
-    public Long findBookById(Registration registration) {
+    public Long registerCustomer(Registration registration) {
 	if (registration == null
 		|| registration.getCustomer() == null
 		|| !CheckerUtility.isNotNullAndNotEmpty(registration.getPassword())
@@ -114,6 +114,7 @@ public class CustomerResource {
 	    throw new WebApplicationException(Status.BAD_REQUEST);
 	}
 	try {
+	    customer.setId(id);
 	    service.updateCustomer(customer);
 	} catch (CustomerNotFoundException ex) {
 	    Logger.getLogger(CustomerResource.class.getName()).log(Level.SEVERE, "CustomerNotFoundException", ex.getMessage());

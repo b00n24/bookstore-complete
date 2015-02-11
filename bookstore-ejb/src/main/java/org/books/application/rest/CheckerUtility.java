@@ -20,7 +20,7 @@ public class CheckerUtility {
     }
 
     public static boolean isNotNullAndNotEmpty(String s) {
-	return s == null || s.isEmpty();
+	return s != null && !s.isEmpty();
     }
 
     public static boolean check(Address obj) {
