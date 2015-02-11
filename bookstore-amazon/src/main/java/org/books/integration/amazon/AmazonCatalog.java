@@ -58,6 +58,7 @@ public class AmazonCatalog {
     public Book itemLookup(String isbn) throws AmazonException {
 	await();
 	final ItemLookupResponse response = proxy.itemLookup(createItemLookup(isbn));
+	timeGuard.setLastStartTime();
 
 	for (Items items : response.getItems()) {
 	    checkForErrors(items);
@@ -83,6 +84,7 @@ public class AmazonCatalog {
 	    currentPage++;
 	    await();
 	    final ItemSearchResponse response = proxy.itemSearch(createItemSearch(keywords, currentPage));
+	    timeGuard.setLastStartTime();
 	    for (Items items : response.getItems()) {
 		totalPages = items.getTotalPages();
 		checkForErrors(items);
@@ -107,11 +109,13 @@ public class AmazonCatalog {
 	while (!timeGuard.isSafe()) {
 	    try {
 		Thread.sleep(POLLING_TIMEOUT);
+//		Thread.sleep(timeGuard.getSleepingTime());
 	    } catch (InterruptedException ex) {
 		Logger.getLogger(AmazonCatalog.class.getName()).log(Level.SEVERE, "Could not sleep", ex);
 	    }
 	}
-	timeGuard.setLastStartTime();
+//	timeGuard.isSafe();
+//	timeGuard.setLastStartTime();
     }
 
     private ItemLookup createItemLookup(String isbn) {

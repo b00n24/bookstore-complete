@@ -3,12 +3,14 @@ package org.books.persistence.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.xml.bind.annotation.XmlRootElement;
 import org.books.persistence.enums.Status;
 
 /**
  *
  * @author AWy
  */
+@XmlRootElement(name = "orderInfo")
 public class OrderInfo implements Serializable {
 
     private Long id;

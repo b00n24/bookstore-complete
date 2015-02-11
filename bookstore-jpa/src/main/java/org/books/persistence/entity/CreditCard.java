@@ -6,9 +6,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import org.books.persistence.enums.Type;
 
 @Entity
+@XmlRootElement(name = "creditCard")
+@XmlType(propOrder = {"type", "number", "expirationMonth", "expirationYear"})
 public class CreditCard implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -35,7 +40,8 @@ public class CreditCard implements Serializable {
 	this.expirationMonth = expirationMonth;
 	this.expirationYear = expirationYear;
     }
-    
+
+    @XmlAttribute
     public Long getId() {
 	return id;
     }
@@ -43,7 +49,7 @@ public class CreditCard implements Serializable {
     public void setId(Long id) {
 	this.id = id;
     }
-    
+
     public Type getType() {
 	return type;
     }
@@ -80,5 +86,5 @@ public class CreditCard implements Serializable {
     public String toString() {
 	return "CreditCard{" + "id=" + id + ", type=" + type + ", number=" + number + ", expirationMonth=" + expirationMonth + ", expirationYear=" + expirationYear + '}';
     }
-    
+
 }

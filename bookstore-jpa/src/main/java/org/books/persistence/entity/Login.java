@@ -7,6 +7,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
@@ -16,6 +19,8 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(name = Login.QUERY_BY_NAME, query = "SELECT l FROM Login l WHERE LOWER(l.userName) = :" + Login.PARAM_NAME)
 })
+@XmlRootElement(name = "login")
+@XmlType(propOrder = {"userName", "password"})
 public class Login implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -32,6 +37,7 @@ public class Login implements Serializable {
 
     private String password;
 
+    @XmlAttribute
     public Long getId() {
 	return id;
     }

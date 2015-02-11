@@ -4,8 +4,13 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
+@XmlRootElement(name = "address")
+@XmlType(propOrder = {"street", "city", "postalCode", "country"})
 public class Address implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -29,6 +34,7 @@ public class Address implements Serializable {
 	this.country = country;
     }
 
+    @XmlAttribute
     public Long getId() {
 	return id;
     }

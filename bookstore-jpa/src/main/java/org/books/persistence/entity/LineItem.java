@@ -6,19 +6,23 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
+@XmlRootElement(name = "lineitem")
+@XmlType(propOrder = {"book", "quantity"})
 public class LineItem implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @GeneratedValue
     private Long id;
-    
     @ManyToOne(optional = false, cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
     private Book book;
-    
+
     private Integer quantity;
 
     public LineItem() {
@@ -29,6 +33,7 @@ public class LineItem implements Serializable {
 	this.quantity = quantity;
     }
 
+    @XmlAttribute
     public Long getId() {
 	return id;
     }
@@ -36,7 +41,7 @@ public class LineItem implements Serializable {
     public void setId(Long id) {
 	this.id = id;
     }
-    
+
     public Book getBook() {
 	return book;
     }

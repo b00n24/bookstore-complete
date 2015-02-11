@@ -20,6 +20,9 @@ import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import org.books.persistence.enums.Status;
 
 // order is a reserved word in SQL
@@ -30,6 +33,8 @@ import org.books.persistence.enums.Status;
 	    + " FROM BookOrder o JOIN o.customer c where o.customer.id = :" + Order.PARAM_CUSTOMER_ID + " and"
 	    + " o.date BETWEEN :" + Order.PARAM_FIRST_OF_YEAR + " and :" + Order.PARAM_LAST_OF_YEAR)
 })
+@XmlRootElement(name = "order")
+@XmlType(propOrder = {"number", "date", "amount", "status", "customer", "address", "creditCard", "items"})
 public class Order implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,7 +44,7 @@ public class Order implements Serializable {
     public static final String PARAM_CUSTOMER_ID = "customerId";
     public static final String PARAM_FIRST_OF_YEAR = "firstOfYear";
     public static final String PARAM_LAST_OF_YEAR = "lastOfYear";
-    
+
     @Id
     @GeneratedValue
     private Long id;
@@ -85,6 +90,7 @@ public class Order implements Serializable {
 	this.items = items;
     }
 
+    @XmlAttribute
     public Long getId() {
 	return id;
     }

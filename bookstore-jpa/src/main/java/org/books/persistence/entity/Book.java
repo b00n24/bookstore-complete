@@ -9,10 +9,15 @@ import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import org.books.persistence.enums.Binding;
 
 @Entity
 @NamedQuery(name = Book.QUERY_BY_ISBN, query = "SELECT b FROM Book b WHERE LOWER(b.isbn) = :" + Book.PARAM_ISBN)
+@XmlRootElement(name = "book")
+@XmlType(propOrder = {"isbn", "title", "authors", "publisher", "publicationYear", "binding", "numberOfPages", "price"})
 public class Book implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -57,6 +62,7 @@ public class Book implements Serializable {
 	this.price = price;
     }
 
+    @XmlAttribute
     public Long getId() {
 	return id;
     }

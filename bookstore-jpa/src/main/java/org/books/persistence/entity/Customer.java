@@ -9,20 +9,25 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToOne;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 @Entity
 @NamedQueries({
     @NamedQuery(name = Customer.QUERY_BY_EMAIL, query = "SELECT c FROM Customer c WHERE LOWER(c.email) = :" + Customer.PARAM_EMAIL),
     @NamedQuery(name = Customer.QUERY_BY_NAME, query = "SELECT NEW org.books.persistence.dto.CustomerInfo(c.id, c.firstName, c.lastName, c.email)"
-		+ " FROM Customer c WHERE LOWER(c.firstName) LIKE :" + Customer.PARAM_NAME + " OR LOWER(c.lastName) LIKE :" + Customer.PARAM_NAME + " ORDER BY c.firstName")    
+	    + " FROM Customer c WHERE LOWER(c.firstName) LIKE :" + Customer.PARAM_NAME + " OR LOWER(c.lastName) LIKE :" + Customer.PARAM_NAME + " ORDER BY c.firstName")
 })
+@XmlRootElement(name = "customer")
+@XmlType(propOrder = {"firstName", "lastName", "email", "address", "creditCard"})
 public class Customer implements Serializable {
 
     private static final long serialVersionUID = 1L;
     public static final String QUERY_BY_EMAIL = "Customer.email";
     public static final String PARAM_EMAIL = "email";
     public static final String QUERY_BY_NAME = "Customer.name";
-    public static final String PARAM_NAME = "name";    
+    public static final String PARAM_NAME = "name";
 
     @Id
     @GeneratedValue
@@ -52,6 +57,7 @@ public class Customer implements Serializable {
 	this.creditCard = creditCard;
     }
 
+    @XmlAttribute
     public Long getId() {
 	return id;
     }
