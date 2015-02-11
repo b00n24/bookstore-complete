@@ -24,6 +24,7 @@ import org.books.application.exception.CustomerNotFoundException;
 import org.books.application.exception.InvalidOrderStatusException;
 import org.books.application.exception.OrderNotFoundException;
 import org.books.application.exception.PaymentFailedException;
+import org.books.integration.amazon.AmazonCatalog;
 import org.books.persistence.dto.OrderInfo;
 import org.books.persistence.dto.OrderItem;
 import org.books.persistence.entity.Address;
@@ -56,6 +57,8 @@ public class OrderServiceBean implements OrderServiceLocal, OrderServiceRemote {
     private Queue orderQueue;
     @Inject
     private MailBean mailBean;
+    @Inject
+    private CatalogService catalogService;
 
     @PostConstruct
     public void initialize() {
@@ -113,10 +116,8 @@ public class OrderServiceBean implements OrderServiceLocal, OrderServiceRemote {
 
 	BigDecimal amount = new BigDecimal(BigInteger.ZERO);
 	for (OrderItem item : items) {
-	    Book book = bookRepository.findByISBN(item.getIsbn());
-	    if (book == null) {
-		throw new BookNotFoundException();
-	    }
+	    Book book = catalogService.findBook(item.getIsbn());
+
 	    BigDecimal curAmount = book.getPrice().multiply(new BigDecimal(item.getQuantity()));
 	    amount = amount.add(curAmount);
 	    order.getItems().add(new LineItem(book, item.getQuantity()));

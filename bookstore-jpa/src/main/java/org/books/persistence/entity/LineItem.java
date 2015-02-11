@@ -1,6 +1,7 @@
 package org.books.persistence.entity;
 
 import java.io.Serializable;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,7 +16,7 @@ public class LineItem implements Serializable {
     @GeneratedValue
     private Long id;
     
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = {CascadeType.REFRESH, CascadeType.PERSIST})
     private Book book;
     
     private Integer quantity;
