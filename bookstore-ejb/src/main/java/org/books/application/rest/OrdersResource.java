@@ -52,13 +52,13 @@ public class OrdersResource {
 	try {
 	    orderInfo = service.placeOrder(orderRequest.getCustomerId(), orderRequest.getItems());
 	} catch (CustomerNotFoundException ex) {
-	    Logger.getLogger(CustomerResource.class.getName()).log(Level.SEVERE, "CustomerNotFoundException", ex.getMessage());
+	    Logger.getLogger(OrdersResource.class.getName()).log(Level.SEVERE, "CustomerNotFoundException", ex.getMessage());
 	    throw new WebApplicationException(Status.NOT_FOUND);
 	} catch (BookNotFoundException ex) {
-	    Logger.getLogger(CustomerResource.class.getName()).log(Level.SEVERE, "BookNotFoundException", ex.getMessage());
+	    Logger.getLogger(OrdersResource.class.getName()).log(Level.SEVERE, "BookNotFoundException", ex.getMessage());
 	    throw new WebApplicationException(Status.NOT_FOUND);
 	} catch (PaymentFailedException ex) {
-	    Logger.getLogger(CustomerResource.class.getName()).log(Level.SEVERE, "PaymentFailedException", ex.getMessage());
+	    Logger.getLogger(OrdersResource.class.getName()).log(Level.SEVERE, "PaymentFailedException", ex.getMessage());
 	    throw new WebApplicationException(Status.PAYMENT_REQUIRED);
 	}
 

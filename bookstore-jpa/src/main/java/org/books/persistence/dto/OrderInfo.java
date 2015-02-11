@@ -11,6 +11,7 @@ import org.books.persistence.enums.Status;
  * @author AWy
  */
 @XmlRootElement(name = "orderInfo")
+// TODO SIR reihenfolge
 public class OrderInfo implements Serializable {
 
     private Long id;
