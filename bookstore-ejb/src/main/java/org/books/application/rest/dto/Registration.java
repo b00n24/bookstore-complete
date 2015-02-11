@@ -1,6 +1,7 @@
 package org.books.application.rest.dto;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import org.books.persistence.entity.Customer;
 
 /**
@@ -8,6 +9,7 @@ import org.books.persistence.entity.Customer;
  * @author AWy
  */
 @XmlRootElement(name = "registration")
+@XmlType(propOrder = {"customer", "password"})
 public class Registration {
 
     private final Customer customer;
