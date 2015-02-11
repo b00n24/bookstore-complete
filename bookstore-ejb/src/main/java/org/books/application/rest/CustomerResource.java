@@ -20,6 +20,7 @@ import javax.ws.rs.core.Response.Status;
 import org.books.application.exception.CustomerNotFoundException;
 import org.books.application.exception.EmailAlreadyUsedException;
 import org.books.application.service.CustomerService;
+import org.books.application.service.CustomerServiceLocal;
 import org.books.persistence.dto.CustomerInfo;
 import org.books.persistence.entity.Customer;
 
@@ -30,17 +31,17 @@ import org.books.persistence.entity.Customer;
 @Path("customers")
 public class CustomerResource {
 
-    @EJB
+    @EJB(beanInterface = CustomerServiceLocal.class)
     private CustomerService service;
 
     @POST
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
     public Long findBookById(Registration registration) {
-	if (registration == null || 
-		registration.getCustomer() == null || 
-		!CheckerUtility.notNullAndNotEmpty(registration.getPassword()) || 
-		!CheckerUtility.check(registration.getCustomer())) {
+	if (registration == null
+		|| registration.getCustomer() == null
+		|| !CheckerUtility.isNotNullAndNotEmpty(registration.getPassword())
+		|| !CheckerUtility.check(registration.getCustomer())) {
 	    throw new WebApplicationException(Status.BAD_REQUEST);
 	}
 	Long customerId = null;
@@ -77,7 +78,7 @@ public class CustomerResource {
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     public Customer findCustomerByEmail(@QueryParam("email") String email) {
-	if (!CheckerUtility.notNullAndNotEmpty(email)) {
+	if (!CheckerUtility.isNotNullAndNotEmpty(email)) {
 	    throw new WebApplicationException(Status.BAD_REQUEST);
 	}
 	Customer customer = null;
@@ -96,7 +97,7 @@ public class CustomerResource {
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     public List<CustomerInfo> searchCustomerByName(@QueryParam("name") String name) {
-	if (!CheckerUtility.notNullAndNotEmpty(name)) {
+	if (!CheckerUtility.isNotNullAndNotEmpty(name)) {
 	    throw new WebApplicationException(Status.BAD_REQUEST);
 	}
 	List<CustomerInfo> customerInfos = null;

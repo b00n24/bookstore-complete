@@ -14,6 +14,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import javax.ws.rs.core.Response.Status;
 import org.books.application.exception.CustomerNotFoundException;
 import org.books.application.service.OrderService;
+import org.books.application.service.OrderServiceLocal;
 import org.books.persistence.dto.OrderInfo;
 
 /**
@@ -23,7 +24,7 @@ import org.books.persistence.dto.OrderInfo;
 @Path("admin/orders")
 public class OrdersResourceAdmin {
 
-    @EJB
+    @EJB(beanInterface = OrderServiceLocal.class)
     private OrderService service;
 
     @GET

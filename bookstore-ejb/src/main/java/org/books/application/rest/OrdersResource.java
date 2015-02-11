@@ -22,6 +22,7 @@ import org.books.application.exception.OrderNotFoundException;
 import org.books.application.exception.PaymentFailedException;
 import org.books.application.rest.dto.OrderRequest;
 import org.books.application.service.OrderService;
+import org.books.application.service.OrderServiceLocal;
 import org.books.persistence.dto.OrderInfo;
 import org.books.persistence.dto.OrderItem;
 import org.books.persistence.entity.Order;
@@ -33,7 +34,7 @@ import org.books.persistence.entity.Order;
 @Path("orders")
 public class OrdersResource {
 
-    @EJB
+    @EJB(beanInterface = OrderServiceLocal.class)
     private OrderService service;
 
     @POST
@@ -44,7 +45,7 @@ public class OrdersResource {
 	    throw new WebApplicationException(Status.BAD_REQUEST);
 	}
 	for (OrderItem item : orderRequest.getItems()) {
-	    if (!CheckerUtility.notNullAndNotEmpty(item.getIsbn()) || item.getQuantity() == null) {
+	    if (!CheckerUtility.isNotNullAndNotEmpty(item.getIsbn()) || item.getQuantity() == null) {
 		throw new WebApplicationException(Status.BAD_REQUEST);
 	    }
 	}
@@ -86,7 +87,7 @@ public class OrdersResource {
     @GET
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     public Order findOrderByNumber(@QueryParam("number") String number) {
-	if (!CheckerUtility.notNullAndNotEmpty(number)) {
+	if (!CheckerUtility.isNotNullAndNotEmpty(number)) {
 	    throw new WebApplicationException(Status.BAD_REQUEST);
 	}
 	Order order = null;

@@ -15,6 +15,7 @@ import static javax.ws.rs.core.MediaType.APPLICATION_XML;
 import javax.ws.rs.core.Response.Status;
 import org.books.application.exception.BookNotFoundException;
 import org.books.application.service.CatalogService;
+import org.books.application.service.CatalogServiceLocal;
 import org.books.persistence.entity.Book;
 
 /**
@@ -24,7 +25,7 @@ import org.books.persistence.entity.Book;
 @Path("books")
 public class CatalogResource {
 
-    @EJB
+    @EJB(beanInterface = CatalogServiceLocal.class)
     private CatalogService service;
 
     @GET
@@ -48,7 +49,7 @@ public class CatalogResource {
     @GET
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     public Book findBookByIsbn(@QueryParam("isbn") String isbn) {
-	if (!CheckerUtility.notNullAndNotEmpty(isbn)) {
+	if (!CheckerUtility.isNotNullAndNotEmpty(isbn)) {
 	    throw new WebApplicationException(Status.BAD_REQUEST);
 	}
 	Book book = null;
@@ -66,7 +67,7 @@ public class CatalogResource {
     @Path("search")
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     public List<Book> search(@QueryParam("keywords") String keywords) {
-	if (!CheckerUtility.notNullAndNotEmpty(keywords)) {
+	if (!CheckerUtility.isNotNullAndNotEmpty(keywords)) {
 	    throw new WebApplicationException(Status.BAD_REQUEST);
 	}
 	List<Book> books = null;

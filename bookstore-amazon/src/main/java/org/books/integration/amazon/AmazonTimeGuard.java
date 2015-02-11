@@ -1,9 +1,5 @@
 package org.books.integration.amazon;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.ejb.Lock;
-import javax.ejb.LockType;
 import javax.ejb.Singleton;
 
 @Singleton

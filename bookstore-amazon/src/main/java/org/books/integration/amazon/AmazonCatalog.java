@@ -109,13 +109,11 @@ public class AmazonCatalog {
 	while (!timeGuard.isSafe()) {
 	    try {
 		Thread.sleep(POLLING_TIMEOUT);
-//		Thread.sleep(timeGuard.getSleepingTime());
+		//Thread.sleep(timeGuard.getSleepingTime());
 	    } catch (InterruptedException ex) {
 		Logger.getLogger(AmazonCatalog.class.getName()).log(Level.SEVERE, "Could not sleep", ex);
 	    }
 	}
-//	timeGuard.isSafe();
-//	timeGuard.setLastStartTime();
     }
 
     private ItemLookup createItemLookup(String isbn) {

@@ -38,10 +38,10 @@ public class AmazonCatalogTest {
 	assertTrue(books.size() <= 100);
     }
 
-    @Test(threadPoolSize = 100, invocationCount = 10)
-    public void searchBooks_multipleThreads() throws AmazonException {
-	List<Book> books = amazonCatalog.itemSearch("Java");
-	assertFalse(books.isEmpty());
-    }
+//    @Test(threadPoolSize = 100, invocationCount = 10)
+//    public void searchBooks_multipleThreads() throws AmazonException {
+//	List<Book> books = amazonCatalog.itemSearch("Java");
+//	assertFalse(books.isEmpty());
+//    }
 
 }

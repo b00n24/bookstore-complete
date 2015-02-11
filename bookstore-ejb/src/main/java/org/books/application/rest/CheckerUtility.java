@@ -12,26 +12,26 @@ import org.books.persistence.entity.Order;
 public class CheckerUtility {
 
     public static boolean check(Customer customer) {
-	return notNullAndNotEmpty(customer.getFirstName())
-		&& notNullAndNotEmpty(customer.getLastName())
-		&& notNullAndNotEmpty(customer.getEmail())
+	return isNotNullAndNotEmpty(customer.getFirstName())
+		&& isNotNullAndNotEmpty(customer.getLastName())
+		&& isNotNullAndNotEmpty(customer.getEmail())
 		&& CheckerUtility.check(customer.getAddress())
 		&& CheckerUtility.check(customer.getCreditCard());
     }
 
-    public static boolean notNullAndNotEmpty(String s) {
-	return s != null && s.isEmpty();
+    public static boolean isNotNullAndNotEmpty(String s) {
+	return s == null || s.isEmpty();
     }
 
     public static boolean check(Address obj) {
-	return notNullAndNotEmpty(obj.getCity())
-		&& notNullAndNotEmpty(obj.getCountry())
-		&& notNullAndNotEmpty(obj.getPostalCode())
-		&& notNullAndNotEmpty(obj.getStreet());
+	return isNotNullAndNotEmpty(obj.getCity())
+		&& isNotNullAndNotEmpty(obj.getCountry())
+		&& isNotNullAndNotEmpty(obj.getPostalCode())
+		&& isNotNullAndNotEmpty(obj.getStreet());
     }
 
     public static boolean check(CreditCard obj) {
-	return notNullAndNotEmpty(obj.getNumber())
+	return isNotNullAndNotEmpty(obj.getNumber())
 		&& obj.getExpirationMonth() != null
 		&& obj.getExpirationYear() != null
 		&& obj.getType() != null;
@@ -44,7 +44,7 @@ public class CheckerUtility {
 		&& CheckerUtility.check(order.getCustomer())
 		&& order.getDate() != null
 		&& !order.getItems().isEmpty()
-		&& CheckerUtility.notNullAndNotEmpty(order.getNumber())
+		&& CheckerUtility.isNotNullAndNotEmpty(order.getNumber())
 		&& order.getStatus() != null;
     }
 }
