@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import org.books.persistence.enums.Status;
 
 /**
@@ -11,7 +12,7 @@ import org.books.persistence.enums.Status;
  * @author AWy
  */
 @XmlRootElement(name = "orderInfo")
-// TODO SIR reihenfolge
+@XmlType(propOrder = {"number", "date", "amount", "status"})
 public class OrderInfo implements Serializable {
 
     private Long id;

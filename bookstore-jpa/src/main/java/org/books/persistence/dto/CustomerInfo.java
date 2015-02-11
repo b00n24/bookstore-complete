@@ -2,12 +2,14 @@ package org.books.persistence.dto;
 
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author AWy
  */
-@XmlRootElement(name = "CustomerInfo")
+@XmlRootElement(name = "customerInfo")
+@XmlType(propOrder = {"firstName", "lastName", "email"})
 public class CustomerInfo implements Serializable {
 
     private Long id;

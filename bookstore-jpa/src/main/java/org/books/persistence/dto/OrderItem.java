@@ -2,12 +2,14 @@ package org.books.persistence.dto;
 
 import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 
 /**
  *
  * @author AWy
  */
-@XmlRootElement(name = "OrderItem")
+@XmlRootElement(name = "orderItem")
+@XmlType(propOrder = {"isbn", "quantity"})
 public class OrderItem implements Serializable {
 
     private String isbn;

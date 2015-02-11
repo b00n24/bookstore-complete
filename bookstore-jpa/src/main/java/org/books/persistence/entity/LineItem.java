@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @Entity
-@XmlRootElement(name = "lineitem")
+@XmlRootElement(name = "lineItem")
 @XmlType(propOrder = {"book", "quantity"})
 public class LineItem implements Serializable {
 
