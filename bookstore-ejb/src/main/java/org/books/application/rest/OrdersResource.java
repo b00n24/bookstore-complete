@@ -76,7 +76,7 @@ public class OrdersResource {
 	try {
 	    order = service.findOrder(id);
 	} catch (OrderNotFoundException ex) {
-	    Logger.getLogger(CatalogResource.class.getName()).log(Level.SEVERE, "OrderNotFoundException", ex.getMessage());
+	    Logger.getLogger(OrdersResource.class.getName()).log(Level.SEVERE, "OrderNotFoundException", ex.getMessage());
 	    throw new WebApplicationException(Status.NOT_FOUND);
 	}
 

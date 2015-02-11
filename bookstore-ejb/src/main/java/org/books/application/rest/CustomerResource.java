@@ -66,7 +66,7 @@ public class CustomerResource {
 	try {
 	    customer = service.findCustomer(id);
 	} catch (CustomerNotFoundException ex) {
-	    Logger.getLogger(CatalogResource.class.getName()).log(Level.SEVERE, "CustomerNotFoundException", ex.getMessage());
+	    Logger.getLogger(CustomerResource.class.getName()).log(Level.SEVERE, "CustomerNotFoundException", ex.getMessage());
 	    throw new WebApplicationException(Status.NOT_FOUND);
 	}
 
