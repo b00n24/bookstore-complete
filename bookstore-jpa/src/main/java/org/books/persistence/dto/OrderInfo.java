@@ -20,6 +20,9 @@ public class OrderInfo implements Serializable {
     private Date date;
     private BigDecimal amount;
     private Status status;
+    
+    public OrderInfo() {
+    }
 
     public OrderInfo(Long id, String number, Date date, BigDecimal amount, Status status) {
 	this.id = id;

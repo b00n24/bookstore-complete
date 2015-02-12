@@ -14,7 +14,6 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
-import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import org.books.application.exception.BookNotFoundException;
 import org.books.application.exception.CustomerNotFoundException;

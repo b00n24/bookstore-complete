@@ -16,6 +16,10 @@ public class CustomerInfo implements Serializable {
     private String firstName;
     private String lastName;
     private String email;
+    
+    public CustomerInfo() {
+
+    }
 
     public CustomerInfo(Long id, String firstName, String lastName, String email) {
 	this.id = id;

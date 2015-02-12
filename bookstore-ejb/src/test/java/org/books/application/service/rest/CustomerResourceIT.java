@@ -98,28 +98,36 @@ public class CustomerResourceIT extends DBUnitInitializer {
     }
 
     @Test
-    public void searchCustomerByName() {
+    public void searchCustomersByName() {
+	// GIVEN
 	final Response response = target.path("search").queryParam("name", "Homer").request(MediaType.APPLICATION_XML).get();
-	if (response.getStatus() != Response.Status.OK.getStatusCode()) {
-	    assertTrue(false);
-	}
+
+	// THEN
+	//assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
 	final List<CustomerInfo> result = response.readEntity(new GenericType<List<CustomerInfo>>() {
 	});
 	assertFalse(result.isEmpty());
     }
 
     @Test
-    public void searchCustomerByName_emptyKeywords_badRequest() {
+    public void searchCustomersByName_emptyKeywords_badRequest() {
+	// GIVEN
 	final Response response = target.path("search").queryParam("name", "").request(MediaType.APPLICATION_XML).get();
-	if (response.getStatus() != Response.Status.BAD_REQUEST.getStatusCode()) {
-	    assertTrue(false);
-	}
+
+	// THEN
+	assertEquals(response.getStatus(), Response.Status.BAD_REQUEST.getStatusCode());
     }
 
     @Test
-    public void searchCustomerByName_notFound() {
+    public void searchCustomersByName_emptyList() {
+	// GIVEN
 	final Response response = target.path("search").queryParam("name", "notExising").request(MediaType.APPLICATION_XML).get();
-	assertEquals(response.getStatus(), Response.Status.NOT_FOUND.getStatusCode());
+
+	// THEN
+	assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
+	final List<CustomerInfo> result = response.readEntity(new GenericType<List<CustomerInfo>>() {
+	});
+	assertTrue(result.isEmpty());
     }
 
     @Test

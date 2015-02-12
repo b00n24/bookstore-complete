@@ -1,5 +1,6 @@
 package org.books.application.rest.dto;
 
+import java.io.Serializable;
 import java.util.List;
 import javax.xml.bind.annotation.XmlRootElement;
 import org.books.persistence.dto.OrderItem;
@@ -9,7 +10,7 @@ import org.books.persistence.dto.OrderItem;
  * @author AWy
  */
 @XmlRootElement(name = "orderRequest")
-public class OrderRequest {
+public class OrderRequest implements Serializable {
 
     private Long customerId;
     private List<OrderItem> items;

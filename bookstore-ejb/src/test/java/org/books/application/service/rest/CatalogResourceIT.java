@@ -13,7 +13,6 @@ import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
 
 import static org.testng.Assert.assertFalse;
-import static org.testng.Assert.assertTrue;
 import org.testng.annotations.BeforeClass;
 
 public class CatalogResourceIT extends DBUnitInitializer {
@@ -28,7 +27,7 @@ public class CatalogResourceIT extends DBUnitInitializer {
 
     @Test
     public void findBookById() {
-	//WHEN
+	// WHEN
 	final Response response = target.path("3").request(MediaType.APPLICATION_XML).get();
 
 	// TEHN
@@ -45,10 +44,11 @@ public class CatalogResourceIT extends DBUnitInitializer {
 
     @Test
     public void findBookByIsbn() {
+	// WHEN
 	final Response response = target.queryParam("isbn", "0071809252").request(MediaType.APPLICATION_XML).get();
-	if (response.getStatus() != Response.Status.OK.getStatusCode()) {
-	    assertTrue(false);
-	}
+
+	// TEHN
+	assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
 	final Book result = response.readEntity(Book.class);
 	Assert.assertNotNull(result);
 	Assert.assertEquals("Java: A Beginner's Guide", result.getTitle());
@@ -68,10 +68,11 @@ public class CatalogResourceIT extends DBUnitInitializer {
 
     @Test
     public void searchBooks() {
+	// WHEN
 	final Response response = target.path("search").queryParam("keywords", "Java").request(MediaType.APPLICATION_XML).get();
-	if (response.getStatus() != Response.Status.OK.getStatusCode()) {
-	    assertTrue(false);
-	}
+
+	// THEN
+	assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
 	final List<Book> result = response.readEntity(new GenericType<List<Book>>() {
 	});
 	assertFalse(result.isEmpty());
@@ -79,18 +80,20 @@ public class CatalogResourceIT extends DBUnitInitializer {
 
     @Test
     public void searchBooks_emptyKeywords_badRequest() {
+	// WHEN
 	final Response response = target.path("search").queryParam("keywords", "").request(MediaType.APPLICATION_XML).get();
-	if (response.getStatus() != Response.Status.BAD_REQUEST.getStatusCode()) {
-	    assertTrue(false);
-	}
+
+	// THEN
+	assertEquals(response.getStatus(), Response.Status.BAD_REQUEST.getStatusCode());
     }
 
     @Test(threadPoolSize = 20, invocationCount = 10)
     public void searchBooks_multipleThreads() {
+	// WHEN
 	final Response response = target.path("search").queryParam("keywords", "Java").request(MediaType.APPLICATION_XML).get();
-	if (response.getStatus() != Response.Status.OK.getStatusCode()) {
-	    assertTrue(false);
-	}
+
+	// THEN
+	assertEquals(response.getStatus(), Response.Status.OK.getStatusCode());
 	final List<Book> result = response.readEntity(new GenericType<List<Book>>() {
 	});
 	assertFalse(result.isEmpty());

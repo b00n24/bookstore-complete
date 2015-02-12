@@ -36,8 +36,8 @@ public class CustomerResource {
     private CustomerService service;
 
     @POST
-    @Produces(TEXT_PLAIN)
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
+    @Produces(TEXT_PLAIN)
     public Long registerCustomer(Registration registration) {
 	if (registration == null
 		|| registration.getCustomer() == null
@@ -58,7 +58,6 @@ public class CustomerResource {
 
     @GET
     @Path("{id}")
-    @Consumes({APPLICATION_XML, APPLICATION_JSON})
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     public Customer findCustomerById(@PathParam("id") Long id) {
 	if (id == null) {
@@ -76,7 +75,6 @@ public class CustomerResource {
     }
 
     @GET
-    @Consumes({APPLICATION_XML, APPLICATION_JSON})
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     public Customer findCustomerByEmail(@QueryParam("email") String email) {
 	if (!CheckerUtility.isNotNullAndNotEmpty(email)) {
@@ -95,9 +93,8 @@ public class CustomerResource {
 
     @GET
     @Path("search")
-    @Consumes({APPLICATION_XML, APPLICATION_JSON})
     @Produces({APPLICATION_XML, APPLICATION_JSON})
-    public List<CustomerInfo> searchCustomerByName(@QueryParam("name") String name) {
+    public List<CustomerInfo> searchCustomersByName(@QueryParam("name") String name) {
 	if (!CheckerUtility.isNotNullAndNotEmpty(name)) {
 	    throw new WebApplicationException(Status.BAD_REQUEST);
 	}

@@ -70,9 +70,6 @@ public class CatalogResource {
 	if (!CheckerUtility.isNotNullAndNotEmpty(keywords)) {
 	    throw new WebApplicationException(Status.BAD_REQUEST);
 	}
-	List<Book> books = null;
-	books = service.searchBooks(keywords);
-
-	return books;
+	return service.searchBooks(keywords);
     }
 }

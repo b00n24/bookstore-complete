@@ -1,5 +1,6 @@
 package org.books.persistence.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -24,7 +25,6 @@ public class CustomerRepository {
 
 	TypedQuery<CustomerInfo> query = em.createNamedQuery(Customer.QUERY_BY_NAME, CustomerInfo.class);
 	query.setParameter(Customer.PARAM_NAME, QueryUtil.convertToLikeValueAndLowerCase(name));
-
 	return query.getResultList();
     }
 

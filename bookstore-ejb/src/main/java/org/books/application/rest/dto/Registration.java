@@ -1,5 +1,6 @@
 package org.books.application.rest.dto;
 
+import java.io.Serializable;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.books.persistence.entity.Customer;
@@ -10,7 +11,7 @@ import org.books.persistence.entity.Customer;
  */
 @XmlRootElement(name = "registration")
 @XmlType(propOrder = {"customer", "password"})
-public class Registration {
+public class Registration implements Serializable {
 
     private Customer customer;
     private String password;
