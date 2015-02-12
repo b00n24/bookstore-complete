@@ -11,7 +11,6 @@ import org.books.application.rest.dto.OrderRequest;
 import org.books.application.service.DBUnitInitializer;
 import org.books.persistence.dto.OrderInfo;
 import org.books.persistence.dto.OrderItem;
-import org.books.persistence.entity.Customer;
 import org.books.persistence.entity.Order;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
@@ -94,8 +93,7 @@ public class OrdersResourceIT extends DBUnitInitializer {
     @Test
     public void placeOrder_badRequest5() {
 	// GIVEN
-	Long customerId = getExistingCustomerId();
-	OrderRequest orderRequest = createOrderRequest(customerId);
+	OrderRequest orderRequest = createOrderRequest(EXISTING_CUSTOMER_ID);
 	orderRequest.getItems().get(0).setIsbn("");
 
 	// WHEN
@@ -121,7 +119,7 @@ public class OrdersResourceIT extends DBUnitInitializer {
     @Test
     public void placeOrder_bookNotFound_notFound() {
 	// GIVEN
-	OrderRequest orderRequest = createOrderRequest(getExistingCustomerId());
+	OrderRequest orderRequest = createOrderRequest(EXISTING_CUSTOMER_ID);
 	orderRequest.getItems().get(0).setIsbn("notExisting");
 
 	// WHEN
@@ -228,8 +226,7 @@ public class OrdersResourceIT extends DBUnitInitializer {
     @Test
     public void cancleOrder_invalidOrderStatus() {
 	//GIVEN 
-	Long customerId = getExistingCustomerId();
-	OrderRequest orderRequest = createOrderRequest(customerId);
+	OrderRequest orderRequest = createOrderRequest(EXISTING_CUSTOMER_ID);
 	final Response response1 = target.request().post(Entity.xml(orderRequest));
 	final OrderInfo orderInfo = response1.readEntity(OrderInfo.class);
 
@@ -238,18 +235,5 @@ public class OrdersResourceIT extends DBUnitInitializer {
 
 	// THEN
 	assertEquals(response.getStatus(), Response.Status.CONFLICT.getStatusCode());
-    }
-
-    private Long getExistingCustomerId() {
-	final Response response1 = target.path("1").request(MediaType.APPLICATION_XML).get();
-	final Customer customer1 = response1.readEntity(Customer.class);
-	return customer1.getId();
-    }
-    
-    private OrderInfo createOrder() {
-	Long customerId = getExistingCustomerId();
-	OrderRequest orderRequest = createOrderRequest(customerId);
-	final Response response = target.request().post(Entity.xml(orderRequest));
-	return response.readEntity(OrderInfo.class);
     }
 }
