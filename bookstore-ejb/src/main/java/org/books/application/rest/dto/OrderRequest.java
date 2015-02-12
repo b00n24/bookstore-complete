@@ -11,8 +11,12 @@ import org.books.persistence.dto.OrderItem;
 @XmlRootElement(name = "orderRequest")
 public class OrderRequest {
 
-    private final Long customerId;
-    private final List<OrderItem> items;
+    private Long customerId;
+    private List<OrderItem> items;
+
+    public OrderRequest() {
+
+    }
 
     public OrderRequest(Long customerId, List<OrderItem> items) {
 	this.customerId = customerId;
@@ -25,6 +29,14 @@ public class OrderRequest {
 
     public List<OrderItem> getItems() {
 	return items;
+    }
+
+    public void setCustomerId(Long customerId) {
+	this.customerId = customerId;
+    }
+
+    public void setItems(List<OrderItem> items) {
+	this.items = items;
     }
 
 }

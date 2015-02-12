@@ -18,7 +18,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -40,8 +39,6 @@ public class AmazonCatalog {
     private static final String ISBN = "ISBN";
 
     private AWSECommerceServicePortType proxy;
-
-    static AtomicLong counter = new AtomicLong(0);
 
     @EJB
     private AmazonTimeGuard timeGuard;
@@ -80,7 +77,6 @@ public class AmazonCatalog {
 	int currentPage = 0;
 	BigInteger totalPages = BigInteger.TEN;
 	do {
-	    System.out.println(counter.incrementAndGet());
 	    currentPage++;
 	    await();
 	    final ItemSearchResponse response = proxy.itemSearch(createItemSearch(keywords, currentPage));

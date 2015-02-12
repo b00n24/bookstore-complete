@@ -14,6 +14,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
+import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 import org.books.application.exception.BookNotFoundException;
 import org.books.application.exception.CustomerNotFoundException;
@@ -41,7 +42,7 @@ public class OrdersResource {
     @Produces({APPLICATION_XML, APPLICATION_JSON})
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
     public OrderInfo placeOrder(OrderRequest orderRequest) {
-	if (orderRequest == null || orderRequest.getCustomerId() == null || orderRequest.getItems().isEmpty()) {
+	if (orderRequest == null || orderRequest.getCustomerId() == null || orderRequest.getItems() == null || orderRequest.getItems().isEmpty()) {
 	    throw new WebApplicationException(Status.BAD_REQUEST);
 	}
 	for (OrderItem item : orderRequest.getItems()) {
@@ -103,7 +104,7 @@ public class OrdersResource {
 
     @DELETE
     @Path("{id}")
-    public void cancleOrder(@PathParam("id") Long id) {
+    public void cancelOrder(@PathParam("id") Long id) {
 	if (id == null) {
 	    throw new WebApplicationException(Status.BAD_REQUEST);
 	}

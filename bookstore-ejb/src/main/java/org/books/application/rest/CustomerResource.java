@@ -16,6 +16,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.WebApplicationException;
 import static javax.ws.rs.core.MediaType.APPLICATION_JSON;
 import static javax.ws.rs.core.MediaType.APPLICATION_XML;
+import static javax.ws.rs.core.MediaType.TEXT_PLAIN;
 import javax.ws.rs.core.Response.Status;
 import org.books.application.exception.CustomerNotFoundException;
 import org.books.application.exception.EmailAlreadyUsedException;
@@ -35,7 +36,7 @@ public class CustomerResource {
     private CustomerService service;
 
     @POST
-    @Produces({APPLICATION_XML, APPLICATION_JSON})
+    @Produces(TEXT_PLAIN)
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
     public Long registerCustomer(Registration registration) {
 	if (registration == null
@@ -100,10 +101,7 @@ public class CustomerResource {
 	if (!CheckerUtility.isNotNullAndNotEmpty(name)) {
 	    throw new WebApplicationException(Status.BAD_REQUEST);
 	}
-	List<CustomerInfo> customerInfos = null;
-	customerInfos = service.searchCustomers(name);
-
-	return customerInfos;
+	return service.searchCustomers(name);
     }
 
     @PUT

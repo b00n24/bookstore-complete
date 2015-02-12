@@ -19,7 +19,11 @@ public class OrderRepository {
     }
 
     public Order findById(Long id) {
-	return em.find(Order.class, id);
+	Order order = em.find(Order.class, id);
+	if (order != null) {
+	    em.refresh(order);
+	}
+	return order;
     }
 
     public Order findByNumber(String number) {
@@ -70,5 +74,5 @@ public class OrderRepository {
 
     public void persist(Order order) {
 	em.persist(order);
-    }    
+    }
 }

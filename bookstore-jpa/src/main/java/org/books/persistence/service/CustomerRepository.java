@@ -66,7 +66,11 @@ public class CustomerRepository {
     }
 
     public Customer findById(Long customerId) {
-	return em.find(Customer.class, customerId);
+	Customer customer = em.find(Customer.class, customerId);
+	if (customer != null) {
+	    em.refresh(customer);
+	}
+	return customer;
     }
 
     public void persist(Login login) {

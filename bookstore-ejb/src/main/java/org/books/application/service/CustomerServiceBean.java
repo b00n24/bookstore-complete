@@ -73,7 +73,6 @@ public class CustomerServiceBean implements CustomerServiceLocal, CustomerServic
 	customerRepository.persist(customer);
 	customerRepository.flush();
 	return customer.getId();
-
     }
 
     @Override

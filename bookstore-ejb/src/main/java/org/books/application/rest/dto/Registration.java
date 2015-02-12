@@ -12,8 +12,12 @@ import org.books.persistence.entity.Customer;
 @XmlType(propOrder = {"customer", "password"})
 public class Registration {
 
-    private final Customer customer;
-    private final String password;
+    private Customer customer;
+    private String password;
+
+    public Registration() {
+
+    }
 
     public Registration(Customer customer, String password) {
 	this.customer = customer;
@@ -26,6 +30,14 @@ public class Registration {
 
     public String getPassword() {
 	return password;
+    }
+
+    public void setCustomer(Customer customer) {
+	this.customer = customer;
+    }
+
+    public void setPassword(String password) {
+	this.password = password;
     }
 
 }

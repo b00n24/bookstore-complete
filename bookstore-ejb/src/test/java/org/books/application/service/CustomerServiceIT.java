@@ -2,9 +2,6 @@ package org.books.application.service;
 
 import java.util.List;
 import javax.naming.InitialContext;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 import junit.framework.Assert;
 import org.books.application.exception.CustomerNotFoundException;
 import org.books.application.exception.EmailAlreadyUsedException;
@@ -15,10 +12,6 @@ import org.books.persistence.entity.Address;
 import org.books.persistence.entity.CreditCard;
 import org.books.persistence.entity.Customer;
 import org.books.persistence.enums.Type;
-import org.dbunit.IDatabaseTester;
-import org.dbunit.PropertiesBasedJdbcDatabaseTester;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -27,34 +20,20 @@ import org.testng.annotations.Test;
  *
  * @author awy
  */
-public class CustomerServiceIT {
+public class CustomerServiceIT extends DBUnitInitializer {
 
     private static final String SERVICE_NAME = "java:global/bookstore-app/bookstore-ejb/CustomerService!org.books.application.service.CustomerServiceRemote";
-    private static final String DB_UNIT_PROPERTIES = "/dbunit.properties";
-    private static final String DB_UNIT_DATASET = "/dataset.xml";
-
     private CustomerService service;
 
     private static final String EMAIL = "homer@simpson.com";
     private static final String PASS = "simpson";
     private static final Long ID = 1l;
 
-    private EntityManager em;
-
     @BeforeTest
+    @Override
     public void setUpClass() throws Exception {
-	EntityManagerFactory emf = Persistence.createEntityManagerFactory("bookstore");
-	em = emf.createEntityManager();
-	initDatabase();
+	super.setUpClass();
 	service = (CustomerService) new InitialContext().lookup(SERVICE_NAME);
-    }
-
-    private void initDatabase() throws Exception {
-	System.getProperties().load(getClass().getResourceAsStream(DB_UNIT_PROPERTIES));
-	IDatabaseTester databaseTester = new PropertiesBasedJdbcDatabaseTester();
-	IDataSet dataset = new FlatXmlDataSetBuilder().build(getClass().getResourceAsStream(DB_UNIT_DATASET));
-	databaseTester.setDataSet(dataset);
-	databaseTester.onSetup();
     }
 
     @AfterClass

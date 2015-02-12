@@ -7,10 +7,6 @@ import junit.framework.Assert;
 import org.books.application.exception.BookNotFoundException;
 import org.books.application.exception.OrderNotFoundException;
 import org.books.persistence.entity.Book;
-import org.dbunit.IDatabaseTester;
-import org.dbunit.PropertiesBasedJdbcDatabaseTester;
-import org.dbunit.dataset.IDataSet;
-import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Test;
@@ -19,12 +15,9 @@ import org.testng.annotations.Test;
  *
  * @author awy
  */
-public class CatalogServiceIT {
+public class CatalogServiceIT extends DBUnitInitializer {
 
     private static final String SERVICE_NAME = "java:global/bookstore-app/bookstore-ejb/CatalogService!org.books.application.service.CatalogServiceRemote";
-    private static final String DB_UNIT_PROPERTIES = "/dbunit.properties";
-    private static final String DB_UNIT_DATASET = "/dataset.xml";
-
     private CatalogService service;
 
     private static final String ISBN = "0596009208";
@@ -32,17 +25,10 @@ public class CatalogServiceIT {
     private static final String KEYWORDS = "java";
 
     @BeforeTest
+    @Override
     public void setUpClass() throws Exception {
-	initDatabase();
+	super.setUpClass();
 	service = (CatalogService) new InitialContext().lookup(SERVICE_NAME);
-    }
-
-    private void initDatabase() throws Exception {
-	System.getProperties().load(getClass().getResourceAsStream(DB_UNIT_PROPERTIES));
-	IDatabaseTester databaseTester = new PropertiesBasedJdbcDatabaseTester();
-	IDataSet dataset = new FlatXmlDataSetBuilder().build(getClass().getResourceAsStream(DB_UNIT_DATASET));
-	databaseTester.setDataSet(dataset);
-	databaseTester.onSetup();
     }
 
     @AfterClass

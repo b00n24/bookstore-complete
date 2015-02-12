@@ -1,4 +1,6 @@
 <dataset>
+    <SEQUENCE SEQ_NAME="SEQ_GEN" SEQ_COUNT="100" />
+    
     <BOOK ID="1" ISBN="0596009208" TITLE="Head First Java (2nd Edition)" AUTHORS="Kathy Sierra, Bert Bates" PUBLISHER="O'Reilly" publicationYear="2005" BINDING="Paperback" numberOfPages="720" PRICE="44.95"/>
     <BOOK ID="2" ISBN="0596007736" TITLE="Java In A Nutshell (5th Edition)" AUTHORS="David Flanagan" PUBLISHER="O'Reilly" publicationYear="2005" BINDING="Paperback" numberOfPages="1254" PRICE="44.95"/>
     <BOOK ID="3" ISBN="0471777102" TITLE="Professional Java JDK 6 Edition" AUTHORS="W. Clay Richardson, Donald Avondolio, Scot Schrager, Mark W. Mitchell, Jeff Scanlon" PUBLISHER="Wrox" publicationYear="2007" BINDING="Paperback" numberOfPages="741" PRICE="39.99"/>
@@ -40,5 +42,4 @@
     <BookOrder id="3" number="333" orderDate="2015-01-01" amount="333.00" status="shipped" customer_id="1" address_id="6" creditCard_id="6" />
     <BookOrder id="4" number="444" orderDate="2015-01-01" amount="333.00" status="canceled" customer_id="1" address_id="4" creditCard_id="4" />
     
-    <SEQUENCE SEQ_NAME="SEQ_GEN" SEQ_COUNT="100" />
 </dataset>

@@ -15,7 +15,6 @@ import org.books.persistence.QueryUtil;
 import org.books.persistence.entity.Book;
 import org.books.persistence.entity.Book_;
 
-
 public class BookRepository {
 
     private final EntityManager em;
@@ -23,9 +22,13 @@ public class BookRepository {
     public BookRepository(EntityManager em) {
 	this.em = em;
     }
-    
-    public Book findById(Long id){
-	return em.find(Book.class, id);
+
+    public Book findById(Long id) {
+	Book book = em.find(Book.class, id);
+	if (book != null) {
+	    em.refresh(book);
+	}
+	return book;
     }
 
     public Book findByISBN(String isbn) {
