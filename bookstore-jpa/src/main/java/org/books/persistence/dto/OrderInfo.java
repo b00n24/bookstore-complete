@@ -3,6 +3,7 @@ package org.books.persistence.dto;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import org.books.persistence.enums.Status;
@@ -20,7 +21,7 @@ public class OrderInfo implements Serializable {
     private Date date;
     private BigDecimal amount;
     private Status status;
-    
+
     public OrderInfo() {
     }
 
@@ -32,6 +33,7 @@ public class OrderInfo implements Serializable {
 	this.status = status;
     }
 
+    @XmlAttribute
     public Long getId() {
 	return id;
     }

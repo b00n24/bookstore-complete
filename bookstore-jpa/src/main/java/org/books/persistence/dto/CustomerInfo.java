@@ -1,6 +1,7 @@
 package org.books.persistence.dto;
 
 import java.io.Serializable;
+import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -28,6 +29,7 @@ public class CustomerInfo implements Serializable {
 	this.email = email;
     }
 
+    @XmlAttribute
     public Long getId() {
 	return id;
     }
