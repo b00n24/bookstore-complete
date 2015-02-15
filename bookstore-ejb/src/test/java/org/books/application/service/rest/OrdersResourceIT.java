@@ -231,6 +231,6 @@ public class OrdersResourceIT extends DBUnitInitializer {
 	final Response response = target.path(EXISTING_SHIPPED_ORDER_ID).request(MediaType.APPLICATION_XML).delete();
 
 	// THEN
-	assertEquals(response.getStatus(), Response.Status.CONFLICT.getStatusCode());
+	assertEquals(response.getStatus(), Response.Status.FORBIDDEN.getStatusCode());
     }
 }

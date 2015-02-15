@@ -105,7 +105,7 @@ public class CustomerResource {
     @Path("{id}")
     @Consumes({APPLICATION_XML, APPLICATION_JSON})
     public void updateCustomer(@PathParam("id") Long id, Customer customer) {
-	if (id == null || !CheckerUtility.check(customer)) {
+	if (id == null || !CheckerUtility.check(customer) || !id.equals(customer.getId())) {
 	    throw new WebApplicationException(Status.BAD_REQUEST);
 	}
 	try {
@@ -113,7 +113,7 @@ public class CustomerResource {
 	    service.updateCustomer(customer);
 	} catch (CustomerNotFoundException ex) {
 	    Logger.getLogger(CustomerResource.class.getName()).log(Level.SEVERE, "CustomerNotFoundException", ex.getMessage());
-	    throw new WebApplicationException(Status.BAD_REQUEST);
+	    throw new WebApplicationException(Status.NOT_FOUND);
 	} catch (EmailAlreadyUsedException ex) {
 	    Logger.getLogger(CustomerResource.class.getName()).log(Level.SEVERE, "EmailAlreadyUsedException", ex.getMessage());
 	    throw new WebApplicationException(Status.CONFLICT);

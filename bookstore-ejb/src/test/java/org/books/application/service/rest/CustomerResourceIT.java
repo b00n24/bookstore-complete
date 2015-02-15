@@ -145,6 +145,33 @@ public class CustomerResourceIT extends DBUnitInitializer {
     }
 
     @Test
+    public void updateCustomer_notExistingCustomerId_notFound() {
+	// GIVEN
+	Long notExistingId = 1555l;
+	Customer customer = createCustomer("updateCustomer@email.com");
+	customer.setId(notExistingId);
+
+	// WHEN
+	final Response response = target.path(notExistingId.toString()).request().put(Entity.xml(customer));
+
+	//THEN
+	assertEquals(response.getStatus(), Response.Status.NOT_FOUND.getStatusCode());
+    }
+
+    @Test
+    public void updateCustomer_notTheSameId_badRequest() {
+	// GIVEN
+	Customer customer = createCustomer("updateCustomer@email.com");
+	customer.setId(55l);
+
+	// WHEN
+	final Response response = target.path("1").request().put(Entity.xml(customer));
+
+	//THEN
+	assertEquals(response.getStatus(), Response.Status.BAD_REQUEST.getStatusCode());
+    }
+
+    @Test
     public void updateCustomer_existingEmail_conflict() {
 	// GIVEN
 	final Response response1 = target.queryParam("email", "homer@simpson.com").request(MediaType.APPLICATION_XML).get();

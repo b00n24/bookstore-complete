@@ -114,7 +114,7 @@ public class OrdersResource {
 	    throw new WebApplicationException(Status.NOT_FOUND);
 	} catch (InvalidOrderStatusException ex) {
 	    Logger.getLogger(OrdersResource.class.getName()).log(Level.SEVERE, "InvalidOrderStatusException", ex);
-	    throw new WebApplicationException(Status.CONFLICT);
+	    throw new WebApplicationException(Status.FORBIDDEN);
 	}
     }
 
