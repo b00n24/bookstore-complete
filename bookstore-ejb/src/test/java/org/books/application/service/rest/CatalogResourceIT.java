@@ -1,6 +1,7 @@
 package org.books.application.service.rest;
 
 import java.util.List;
+import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.GenericType;
@@ -9,6 +10,7 @@ import javax.ws.rs.core.Response;
 import junit.framework.Assert;
 import org.books.application.service.DBUnitInitializer;
 import org.books.persistence.entity.Book;
+import org.glassfish.jersey.client.ClientProperties;
 import static org.testng.Assert.assertEquals;
 import org.testng.annotations.Test;
 
@@ -22,7 +24,10 @@ public class CatalogResourceIT extends DBUnitInitializer {
 
     @BeforeClass
     public void setupClass() throws Exception {
-	target = ClientBuilder.newClient().target(ENDPOINT);
+	Client client = ClientBuilder.newClient();
+	client.property(ClientProperties.CONNECT_TIMEOUT, 1000 * 60 * 60);
+	client.property(ClientProperties.READ_TIMEOUT, 1000 * 60 * 60);
+	target = client.target(ENDPOINT);
     }
 
     @Test
@@ -87,7 +92,7 @@ public class CatalogResourceIT extends DBUnitInitializer {
 	assertEquals(response.getStatus(), Response.Status.BAD_REQUEST.getStatusCode());
     }
 
-    @Test(threadPoolSize = 20, invocationCount = 10)
+    @Test(threadPoolSize = 5, invocationCount = 10)
     public void searchBooks_multipleThreads() {
 	// WHEN
 	final Response response = target.path("search").queryParam("keywords", "Java").request(MediaType.APPLICATION_XML).get();
