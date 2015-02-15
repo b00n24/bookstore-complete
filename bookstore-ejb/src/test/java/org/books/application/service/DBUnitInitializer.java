@@ -55,7 +55,7 @@ public class DBUnitInitializer {
     protected CreditCard createCreditCard() {
 	CreditCard creditCard = new CreditCard();
 	creditCard.setType(Type.MasterCard);
-	creditCard.setNumber("12345");
+	creditCard.setNumber("1234567890123456");
 	creditCard.setExpirationMonth(6);
 	creditCard.setExpirationYear(2016);
 	return creditCard;
