@@ -18,19 +18,20 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
+import javax.ejb.Singleton;
 import org.books.persistence.entity.Book;
 import org.books.persistence.enums.Binding;
 
-@Stateless
+@Singleton
 public class AmazonCatalog {
 
     private static final long MAX_NBR_OF_PAGES = 10;
     private static final int POLLING_TIMEOUT = 10;
+    private static final int MINIMAL_AMAZON_SERVICE_WAITING_TIME = 1000;
 
     private static final String HARDCOVER = "Hardcover";
     private static final String PAPERBACK = "Paperback";
@@ -39,23 +40,18 @@ public class AmazonCatalog {
     private static final String ISBN = "ISBN";
 
     private AWSECommerceServicePortType proxy;
-
-    @EJB
-    private AmazonTimeGuard timeGuard;
+    private final AtomicLong lastStartTime = new AtomicLong(0);
 
     @PostConstruct
     public void init() {
 	AWSECommerceService service = new AWSECommerceService();
 	proxy = service.getAWSECommerceServicePort();
-	if (timeGuard == null) {
-	    timeGuard = new AmazonTimeGuard();
-	}
     }
 
     public Book itemLookup(String isbn) throws AmazonException {
 	await();
 	final ItemLookupResponse response = proxy.itemLookup(createItemLookup(isbn));
-	timeGuard.setLastStartTime();
+	setLastStartTime();
 
 	for (Items items : response.getItems()) {
 	    checkForErrors(items);
@@ -79,8 +75,9 @@ public class AmazonCatalog {
 	do {
 	    currentPage++;
 	    await();
+//	    System.out.println("xxxxxxxxxxxxxxxxxxxxx"+System.currentTimeMillis());
 	    final ItemSearchResponse response = proxy.itemSearch(createItemSearch(keywords, currentPage));
-	    timeGuard.setLastStartTime();
+	    setLastStartTime();
 	    for (Items items : response.getItems()) {
 		totalPages = items.getTotalPages();
 		checkForErrors(items);
@@ -102,10 +99,10 @@ public class AmazonCatalog {
      * Sleeps if necessary and sets the lastStartTime
      */
     private void await() {
-	while (!timeGuard.isSafe()) {
+	if (!isSafe()) {
 	    try {
-		Thread.sleep(POLLING_TIMEOUT);
-		//Thread.sleep(timeGuard.getSleepingTime());
+//		Thread.sleep(POLLING_TIMEOUT);
+		Thread.sleep(getSleepingTime());
 	    } catch (InterruptedException ex) {
 		Logger.getLogger(AmazonCatalog.class.getName()).log(Level.SEVERE, "Could not sleep", ex);
 	    }
@@ -219,5 +216,17 @@ public class AmazonCatalog {
 
     private boolean isNotNullOrEmpty(String s) {
 	return s != null && !(s.isEmpty());
+    }
+
+    private void setLastStartTime() {
+	this.lastStartTime.set(System.currentTimeMillis());
+    }
+
+    private boolean isSafe() {
+	return (System.currentTimeMillis() - lastStartTime.get()) >= MINIMAL_AMAZON_SERVICE_WAITING_TIME;
+    }
+
+    private long getSleepingTime() {
+	return MINIMAL_AMAZON_SERVICE_WAITING_TIME - (System.currentTimeMillis() - lastStartTime.get());
     }
 }
