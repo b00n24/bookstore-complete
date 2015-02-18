@@ -35,7 +35,7 @@ public class Login implements Serializable {
 
     public Login(String userName, String password) {
 	this.userName = userName;
-	setPassword(password);
+	this.password = convertToSha256Hash(password);
 	this.userGroup = "employee";
     }
 
