@@ -40,6 +40,12 @@
 	    <version>${project.version}</version>
 	    <type>war</type>
 	</dependency>
+	<dependency>
+	    <groupId>org.books</groupId>
+	    <artifactId>bookstore-admin</artifactId>
+	    <version>${project.version}</version>
+	    <type>war</type>
+	</dependency>
     </dependencies>
 
     <build>

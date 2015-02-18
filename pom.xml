@@ -18,6 +18,7 @@
 	<module>bookstore-ejb</module>
 	<module>bookstore-web</module>
 	<module>bookstore-amazon</module>
+        <module>bookstore-admin</module>
     </modules>
 
     <dependencies>
