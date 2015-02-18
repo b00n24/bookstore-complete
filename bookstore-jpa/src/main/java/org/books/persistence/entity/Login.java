@@ -1,12 +1,18 @@
 package org.books.persistence.entity;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.xml.bind.DatatypeConverter;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -37,6 +43,8 @@ public class Login implements Serializable {
 
     private String password;
 
+    private String userGroup;
+
     @XmlAttribute
     public Long getId() {
 	return id;
@@ -59,12 +67,31 @@ public class Login implements Serializable {
     }
 
     public void setPassword(String password) {
-	this.password = password;
+	this.password = convertToSha256Hash(password);
+    }
+
+    public String getUserGroup() {
+	return userGroup;
+    }
+
+    public void setUserGroup(String userGroup) {
+	this.userGroup = userGroup;
     }
 
     @Override
     public String toString() {
-	return "Login{" + "id=" + id + ", userName=" + userName + ", password=" + password + '}';
+	return "Login{" + "id=" + id + ", userName=" + userName + ", password=" + password + ", userGroup=" + userGroup + '}';
+    }
+
+    private String convertToSha256Hash(String plain) {
+	try {
+	    MessageDigest digest = MessageDigest.getInstance("SHA-256");
+	    byte[] hash = digest.digest(plain.getBytes("UTF-8"));
+	    return DatatypeConverter.printHexBinary(hash);
+	} catch (NoSuchAlgorithmException | UnsupportedEncodingException ex) {
+	    Logger.getLogger(Login.class.getName()).log(Level.SEVERE, "Could not encrypt password.", ex);
+	    throw new IllegalArgumentException();
+	}
     }
 
 }

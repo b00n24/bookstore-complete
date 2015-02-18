@@ -6,6 +6,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
+import org.books.application.Roles;
 import org.books.application.exception.CustomerNotFoundException;
 import org.books.application.exception.EmailAlreadyUsedException;
 import org.books.application.exception.InvalidCredentialsException;
@@ -69,6 +70,7 @@ public class CustomerServiceBean implements CustomerServiceLocal, CustomerServic
 	Login login = new Login();
 	login.setUserName(customer.getEmail());
 	login.setPassword(password);
+	login.setUserGroup(Roles.CUSTOMER);
 	customerRepository.persist(login);
 	customerRepository.persist(customer);
 	customerRepository.flush();

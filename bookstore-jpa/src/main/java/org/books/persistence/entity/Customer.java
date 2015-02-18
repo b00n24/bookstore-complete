@@ -4,6 +4,7 @@ import java.io.Serializable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -47,6 +48,8 @@ public class Customer implements Serializable {
     private CreditCard creditCard;
 
     public Customer() {
+	this.address = new Address();
+	this.creditCard = new CreditCard();
     }
 
     public Customer(String firstName, String lastName, String email, Address address, CreditCard creditCard) {

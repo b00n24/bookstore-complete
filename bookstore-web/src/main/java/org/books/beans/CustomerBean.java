@@ -35,8 +35,8 @@ public class CustomerBean implements Serializable {
     private Login login;
 
     public CustomerBean() {
-	customer = new Customer();
-	login = new Login();
+	this.customer = new Customer();
+	this.login = new Login();
     }
 
     public Customer getCustomer() {
